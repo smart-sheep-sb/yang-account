@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>羊氏记账 - 登录</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Microsoft YaHei', sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .login-header {
+      background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+      color: white;
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    .login-header h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .login-header p {
+      opacity: 0.9;
+      font-size: 16px;
+    }
+
+    .login-form {
+      padding: 40px 35px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-with-icon i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #4CAF50;
+      font-size: 18px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 16px 16px 16px 45px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: #f8f9fa;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #4CAF50;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 1px solid #eee;
+    }
+
+    .form-footer a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-size: 14px;
+      margin: 0 10px;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .error-message {
+      color: #f44336;
+      font-size: 14px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .demo-credentials {
+      background: #f0f9f0;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #2E7D32;
+      border: 1px solid #c8e6c9;
+    }
+
+    .demo-credentials p {
+      margin: 5px 0;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        margin: 20px;
+      }
+
+      .login-form {
+        padding: 30px 25px;
+      }
+
+      .login-header {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<div class="login-container">
+  <div class="login-header">
+    <h1>羊氏记账</h1>
+    <p>简单、智能的个人记账工具</p>
+  </div>
+
+  <form class="login-form" id="loginForm">
+    <div class="form-group">
+      <label for="username">用户名</label>
+      <div class="input-with-icon">
+        <i class="fas fa-user"></i>
+        <input type="text" id="username" class="form-control"
+               placeholder="请输入用户名" required autofocus>
+      </div>
+      <div class="error-message" id="usernameError"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">密码</label>
+      <div class="input-with-icon">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password" class="form-control"
+               placeholder="请输入密码" required>
+      </div>
+      <div class="error-message" id="passwordError"></div>
+    </div>
+
+    <button type="submit" class="login-btn">
+      <i class="fas fa-sign-in-alt"></i> 登录 / 注册
+    </button>
+
+    <div class="demo-credentials">
+      <p>✨ 首次登陆请点击立即注册设置新用户 </p>
+      <p>📝 示例：用户：caiyihong 密码：123456</p>
+    </div>
+
+    <div class="form-footer">
+      <a href="register.html">立即注册</a>
+      <span style="color: #cccccc;">|</span>
+      <a href="#" onclick="forgotPassword()">忘记密码</a>
+      <span style="color: #ccc;">|</span>
+      <a href="#" onclick="guestLogin()">游客体验</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  // 1. 登录表单提交处理
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    let isValid = true;
+
+    // 清除之前的错误信息
+    document.getElementById('usernameError').style.display = 'none';
+    document.getElementById('passwordError').style.display = 'none';
+
+    // 验证用户名
+    if (!username) {
+      document.getElementById('usernameError').textContent = '请输入用户名';
+      document.getElementById('usernameError').style.display = 'block';
+      isValid = false;
+    } else if (username.length < 3) {
+      document.getElementById('usernameError').textContent = '用户名至少3个字符';
+      document.getElementById('usernameError').style.display = 'block';
+      isValid = false;
+    }
+
+    // 验证密码
+    if (!password) {
+      document.getElementById('passwordError').textContent = '请输入密码';
+      document.getElementById('passwordError').style.display = 'block';
+      isValid = false;
+    } else if (password.length < 6) {
+      document.getElementById('passwordError').textContent = '密码至少6个字符';
+      document.getElementById('passwordError').style.display = 'block';
+      isValid = false;
+    }
+
+    if (isValid) {
+      // 显示加载状态
+      const loginBtn = document.querySelector('.login-btn');
+      const originalText = loginBtn.innerHTML;
+      loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 登录中...';
+      loginBtn.disabled = true;
+
+      // 模拟网络请求延迟
+      setTimeout(() => {
+        // 获取本地存储的用户数据
+        const users = JSON.parse(localStorage.getItem('accountingUsers') || '[]');
+        const existingUser = users.find(u => u.username === username);
+
+        if (existingUser) {
+          // 验证密码
+          if (existingUser.password !== password) {
+            alert('密码错误！');
+            loginBtn.innerHTML = originalText;
+            loginBtn.disabled = false;
+            return;
+          }
+        } else {
+          // 新用户注册
+          users.push({
+            username: username,
+            password: password,
+            createdAt: new Date().toISOString()
+          });
+          localStorage.setItem('accountingUsers', JSON.stringify(users));
+          alert(`欢迎 ${username}！注册成功！`);
+        }
+
+        // 存储当前用户登录状态
+        localStorage.setItem('currentUser', JSON.stringify({
+          username: username,
+          loginTime: new Date().toISOString()
+        }));
+
+        // 初始化用户的记账数据（如果新用户）
+        if (!localStorage.getItem(`accountingData_${username}`)) {
+          localStorage.setItem(`accountingData_${username}`, JSON.stringify([]));
+        }
+
+        // 跳转到主页面
+        window.location.href = 'main.html';
+      }, 1000);
+    }
+  });
+
+  // 2. 快捷功能
+  function forgotPassword() {
+    alert('请联系管理员重置密码\n或使用其他用户名重新注册');
+  }
+
+  function guestLogin() {
+    if (confirm('游客模式功能有限，确定继续吗？')) {
+      localStorage.setItem('currentUser', JSON.stringify({
+        username: 'guest',
+        loginTime: new Date().toISOString(),
+        isGuest: true
+      }));
+      window.location.href = 'main.html';
+    }
+  }
+
+  // 3. 回车键提交
+  document.getElementById('username').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      document.getElementById('password').focus();
+    }
+  });
+
+  document.getElementById('password').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+    }
+  });
+
+  // 4. 页面加载时检查是否已登录
+  window.addEventListener('DOMContentLoaded', function() {
+    const currentUser = localStorage.getItem('currentUser');
+
+    if (currentUser) {
+      try {
+        const user = JSON.parse(currentUser);
+        if (user.username && user.username !== 'guest') {
+          // 已登录，跳转到主页面
+          window.location.href = 'main.html';
+        }
+      } catch (e) {
+        console.log('解析用户数据失败，重新登录');
+      }
+    }
+
+    console.log('羊氏记账登录页面已加载');
+  });
+</script>
+</body>
+</html>

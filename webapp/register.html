@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>记账管理 - 注册</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+
+        /* 注册页面特定样式 */
+        .register-container {
+            max-width: 400px;
+            margin: 80px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .register-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .register-header h1 {
+            color: #409EFF;
+            margin-bottom: 10px;
+        }
+        .register-form .form-group {
+            margin-bottom: 20px;
+        }
+        .register-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: 500;
+        }
+        .register-form input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .register-form input:focus {
+            border-color: #409EFF;
+            outline: none;
+            box-shadow: 0 0 5px rgba(64,158,255,0.3);
+        }
+        .register-btn {
+            width: 100%;
+            padding: 12px;
+            background: #409EFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .register-btn:hover {
+            background: #337ecc;
+        }
+        .register-footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
+        }
+        .register-footer a {
+            color: #409EFF;
+            text-decoration: none;
+        }
+        .register-footer a:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            color: #F56C6C;
+            background: #fef0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .success-message {
+            color: #67C23A;
+            background: #f0f9eb;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .password-strength {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        .strength-weak {
+            color: #F56C6C;
+        }
+        .strength-medium {
+            color: #E6A23C;
+        }
+        .strength-strong {
+            color: #67C23A;
+        }
+    </style>
+</head>
+<body>
+<div class="register-container">
+    <div class="register-header">
+        <h1>注册新账号</h1>
+        <p>加入记账管理，开启智能记账生活</p>
+    </div>
+    <div class="error-message" id="errorMessage"></div>
+    <div class="success-message" id="successMessage"></div>
+    <form class="register-form" id="registerForm">
+        <div class="form-group">
+            <label for="username">用户名</label>
+            <input type="text" id="username" name="username"
+                   placeholder="请输入用户名（3-20位字母数字）" required>
+            <div class="password-strength" id="usernameTip" style="display: none;">
+                用户名可用
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" id="password" name="password"
+                   placeholder="请输入密码（至少6位）" required>
+            <div class="password-strength" id="passwordStrength">
+                密码强度：<span id="strengthText">未输入</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">确认密码</label>
+            <input type="password" id="confirmPassword" name="confirmPassword"
+                   placeholder="请再次输入密码" required>
+            <div class="password-strength" id="passwordMatch" style="display: none;">
+                密码一致
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="nickname">昵称（可选）</label>
+            <input type="text" id="nickname" name="nickname"
+                   placeholder="请输入昵称，不填则使用用户名">
+        </div>
+        <div class="loading" id="loading">
+            <span>注册中...</span>
+        </div>
+        <button type="submit" class="register-btn">注册</button>
+    </form>
+    <div class="login-link">
+        <p>已有账号？<a href="index.html">立即登录</a></p>
+    </div>
+</div>
+<script>
+    // 检查用户名是否可用
+    document.getElementById('username').addEventListener('blur', async function() {
+        const username = this.value.trim();
+        if (username.length < 3) {
+            return;
+        }
+        // 这里可以添加用户名检查逻辑
+        const usernameTip = document.getElementById('usernameTip');
+        usernameTip.textContent = '正在检查用户名...';
+        usernameTip.style.display = 'block';
+        usernameTip.className = 'password-strength strength-medium';
+        // 简单的前端检查
+        if (username === 'admin') {
+            usernameTip.textContent = '用户名不可用';
+            usernameTip.className = 'password-strength strength-weak';
+        } else {
+            usernameTip.textContent = '用户名可用';
+            usernameTip.className = 'password-strength strength-strong';
+        }
+    });
+    // 密码强度检查
+    document.getElementById('password').addEventListener('input', function() {
+        const password = this.value;
+        const strengthText = document.getElementById('strengthText');
+        const strengthDiv = document.getElementById('passwordStrength');
+        if (password.length === 0) {
+            strengthText.textContent = '未输入';
+            strengthDiv.className = 'password-strength';
+            return;
+        }
+        let strength = 0;
+        if (password.length >= 6) strength++;
+        if (/[A-Z]/.test(password)) strength++;
+        if (/[0-9]/.test(password)) strength++;
+        if (/[^A-Za-z0-9]/.test(password)) strength++;
+        if (strength <= 1) {
+            strengthText.textContent = '弱';
+            strengthDiv.className = 'password-strength strength-weak';
+        } else if (strength <= 3) {
+            strengthText.textContent = '中';
+            strengthDiv.className = 'password-strength strength-medium';
+        } else {
+            strengthText.textContent = '强';
+            strengthDiv.className = 'password-strength strength-strong';
+        }
+    });
+    // 确认密码检查
+    document.getElementById('confirmPassword').addEventListener('input', function() {
+        const password = document.getElementById('password').value;
+        const confirmPassword = this.value;
+        const matchDiv = document.getElementById('passwordMatch');
+        if (confirmPassword.length === 0) {
+            matchDiv.style.display = 'none';
+            return;
+        }
+        if (password === confirmPassword) {
+            matchDiv.textContent = '密码一致';
+            matchDiv.className = 'password-strength strength-strong';
+            matchDiv.style.display = 'block';
+        } else {
+            matchDiv.textContent = '密码不一致';
+            matchDiv.className = 'password-strength strength-weak';
+            matchDiv.style.display = 'block';
+        }
+    });
+    // 注册表单提交
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const nickname = document.getElementById('nickname').value.trim();
+        // 表单验证
+        if (username.length < 3) {
+            showError('用户名至少3位');
+            return;
+        }
+        if (password.length < 6) {
+            showError('密码至少6位');
+            return;
+        }
+        if (password !== confirmPassword) {
+            showError('两次输入的密码不一致');
+            return;
+        }
+        // 显示加载中
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('errorMessage').style.display = 'none';
+        try {
+            // 发送注册请求
+            const response = await fetch('/api/user/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    nickname: nickname || username
+                })
+            });
+            const result = await response.json();
+            // 隐藏加载中
+            document.getElementById('loading').style.display = 'none';
+            if (result.success) {
+                // 注册成功
+                showSuccess('注册成功！正在跳转到登录页面...');
+                // 延迟跳转到登录页面
+                setTimeout(() => {
+                    window.location.href = '/index.html';
+                }, 2000);
+            } else {
+                // 注册失败
+                showError(result.message || '注册失败');
+            }
+        } catch (error) {
+            // 隐藏加载中
+            document.getElementById('loading').style.display = 'none';
+            showError('网络错误，请检查服务器是否正常运行');
+            console.error('注册错误:', error);
+        }
+    });
+    // 显示错误消息
+    function showError(message) {
+        const errorDiv = document.getElementById('errorMessage');
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+        // 3秒后自动隐藏
+        setTimeout(() => {
+            errorDiv.style.display = 'none';
+        }, 3000);
+    }
+    // 显示成功消息
+    function showSuccess(message) {
+        const successDiv = document.getElementById('successMessage');
+        successDiv.textContent = message;
+        successDiv.style.display = 'block';
+    }
+    // 检查是否已经登录
+    function checkLoginStatus() {
+        const user = localStorage.getItem('currentUser');
+        if (user) {
+            // 如果已经登录，直接跳转到主页面
+            window.location.href = '/main.html';
+        }
+    }
+    // 页面加载时检查登录状态
+    window.onload = checkLoginStatus;
+</script>
+</body>
+</html>
