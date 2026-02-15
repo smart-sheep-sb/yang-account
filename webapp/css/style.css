@@ -1,243 +1,420 @@
-/* 基础样式重置 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+ /* ========== 基础重置 ========== */
+* { margin: 0; padding: 0; box-sizing: border-box; } /* 重置所有元素的外边距和内边距为0，并设置盒模型为border-box */
 body {
-    font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    color: #333;
-    line-height: 1.6;
+    font-family: 'Microsoft YaHei', sans-serif;/* 设置字体为微软雅黑，后备字体为无衬线字体 */
+    background: #f5f7fa;/* 设置背景色为浅灰蓝色 */
+    color: #333; /* 设置文字颜色为深灰色 */
+    line-height: 1.6;/* 设置行高为1.6倍字体大小 */
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
+/* ========== 顶部导航 ========== */
+.navbar {
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);/* 设置背景为从浅绿色到深绿色的135度渐变 */
+    color: white;/* 设置文字颜色为白色 */
+    padding: 15px 30px;/* 设置内边距，上下15px，左右30px */
+    display: flex;/* 使用弹性布局 */
+    justify-content: space-between;/* 主轴方向子元素两端对齐 */
+    align-items: center;/* 交叉轴方向子元素居中对齐 */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);/* 添加阴影效果，向下偏移2px，模糊半径10px */
 }
 
-ul, ol {
-    list-style: none;
+.logo {
+    font-size: 24px;/* 设置字体大小为24px */
+    font-weight: bold;/* 设置字体加粗 */
+    display: flex;/* 使用弹性布局 */
+    align-items: center;/* 垂直居中对齐子元素 */
+    gap: 10px;/* 设置子元素间距为10px */
 }
 
-/* 通用容器样式 */
+.user-info {
+    font-size: 14px;/* 设置字体大小为14px */
+    opacity: 0.9;/* 设置透明度为0.9 */
+}
+
+.logout-btn {
+    background: rgba(255,255,255,0.2);/* 设置背景为白色半透明 */
+    border: 1px solid rgba(255,255,255,0.3);/* 设置边框为白色半透明 */
+    color: white;/* 设置文字颜色为白色 */
+    padding: 8px 16px;/* 设置内边距，上下8px，左右16px */
+    border-radius: 20px;/* 设置边框圆角为20px */
+    cursor: pointer;/* 鼠标悬停时显示手型光标 */
+    font-size: 14px;/* 设置字体大小为14px */
+    transition: background 0.3s;/* 设置背景色过渡效果，持续0.3秒 */
+}
+
+.logout-btn:hover { background: rgba(255,255,255,0.3); }/* 鼠标悬停时背景透明度变为0.3 */
+
+/* ========== 主标题 ========== */
+.main-title {
+    text-align: center;/* 文字居中对齐 */
+    padding: 30px 0 20px;/* 设置内边距，上30px，左右0，下20px */
+    color: #2c3e50;/* 设置文字颜色为深蓝灰色 */
+}
+
+.main-title h1 {
+    font-size: 36px;/* 设置字体大小为36px */
+    font-weight: bold;/* 设置字体加粗 */
+    margin-bottom: 10px;/* 设置下外边距为10px */
+    background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);/* 设置背景为从绿色到蓝色的渐变 */
+    -webkit-background-clip: text;/* 将背景裁剪为文字形状（WebKit内核浏览器） */
+    -webkit-text-fill-color: transparent;/* 设置文字颜色为透明，显示背景渐变 */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);/* 添加文字阴影 */
+}
+
+.main-title p {
+    color: #7f8c8d;/* 设置文字颜色为灰蓝色 */
+    font-size: 16px;/* 设置字体大小为16px */
+    max-width: 600px;/* 设置最大宽度为600px */
+    margin: 0 auto;/* 水平居中 */
+}
+
+/* ========== 主容器 ========== */
+.container{
+    max-width: 1000px;/* 设置最大宽度为1000px */
+    margin: 0 auto;/* 水平居中 */
+    padding: 0 20px 40px;/* 设置内边距，左右20px，下40px */
+}
+
+/* ========== 主容器 ========== */
 .container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    max-width: 1000px;/* 设置最大宽度为1000px */
+    margin: 0 auto;/* 水平居中 */
+    padding: 20px;/* 设置内边距为20px */
 }
 
-/* 按钮通用样式 */
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #409EFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s;
-    text-align: center;
+/* ========== 统计卡片 ========== */
+.stats-grid {
+    display: grid;/* 使用网格布局 */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));/* 响应式列，每列最小250px，自动填充 */
+    gap: 20px;/* 设置网格间距为20px */
+    margin: 25px 0;/* 设置上下外边距为25px */
 }
 
-.btn:hover {
-    background: #337ecc;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+.stat-card {
+    background: white;/* 设置背景色为白色 */
+    padding: 25px;/* 设置内边距为25px */
+    border-radius: 12px;/* 设置边框圆角为12px */
+    text-align: center;/* 文字居中对齐 */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);/* 添加阴影效果 */
 }
 
-.btn-primary {
-    background: #409EFF;
+.stat-label {
+    color: #666;/* 设置文字颜色为灰色 */
+    font-size: 14px;/* 设置字体大小为14px */
+    margin-bottom: 10px;/* 设置下外边距为10px */
 }
 
-.btn-success {
-    background: #67C23A;
+.stat-value {
+    font-size: 32px;/* 设置字体大小为32px */
+    font-weight: bold;/* 设置字体加粗 */
+    font-family: 'Courier New', monospace;/* 设置等宽字体，适用于数字 */
 }
 
-.btn-warning {
-    background: #E6A23C;
+.income { color: #4CAF50; }/* 收入相关样式，绿色 */
+.expense { color: #F44336; }/* 支出相关样式，红色 */
+.balance { color: #2196F3; }/* 余额相关样式，蓝色 */
+
+/* ========== 记账表单 ========== */
+.record-form {
+    background: white;/* 设置背景色为白色 */
+    padding: 25px;/* 设置内边距为25px */
+    border-radius: 12px;/* 设置边框圆角为12px */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);/* 添加阴影效果 */
+    margin: 25px 0;/* 设置上下外边距为25px */
 }
 
-.btn-danger {
-    background: #F56C6C;
+.form-grid {
+    display: grid;/* 使用网格布局*/
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));/* 响应式列，每列最小200px */
+    gap: 20px;/* 设置网格间距为20px */
+    margin-bottom: 20px;/* 设置下外边距为20px */
 }
 
-.btn-small {
-    padding: 6px 12px;
-    font-size: 12px;
-}
-
-/* 表单通用样式 */
-.form-group {
-    margin-bottom: 20px;
-}
+.form-group { margin-bottom: 15px; }/* 表单组下外边距为15px */
 
 .form-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #666;
+    display: block;/* 设置为块级元素，独占一行 */
+    margin-bottom: 8px;/* 设置下外边距为8px */
+    font-weight: 500;/* 设置字体粗细为500 */
+    color: #555;/* 设置文字颜色为中灰色 */
+    font-size: 14px;/* 设置字体大小为14px */
 }
 
 .form-control {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s;
+    width: 100%;/* 宽度100% */
+    padding: 12px 15px;/* 设置内边距，上下12px，左右15px */
+    border: 2px solid #e0e0e0;/* 设置边框为2px实线浅灰色 */
+    border-radius: 8px;/* 设置边框圆角为8px */
+    font-size: 16px;/* 设置字体大小为16px */
+    transition: border-color 0.3s;/* 设置边框颜色过渡效果，持续0.3秒 */
 }
 
 .form-control:focus {
-    border-color: #409EFF;
-    outline: none;
-    box-shadow: 0 0 5px rgba(64,158,255,0.3);
+    outline: none;/* 移除默认的焦点轮廓 */
+    border-color: #4CAF50;/* 焦点时边框颜色变为绿色 */
 }
 
-/* 卡片样式 */
-.card {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    padding: 24px;
-    margin-bottom: 20px;
+.btn {
+    padding: 12px 24px;/* 设置内边距，上下12px，左右24px */
+    border: none;/* 移除边框 */
+    border-radius: 8px;/* 设置边框圆角为8px */
+    font-size: 16px;/* 设置字体大小为16px */
+    font-weight: 600;/* 设置字体粗细为600 */
+    cursor: pointer;/* 鼠标悬停时显示手型光标 */
+    transition: all 0.3s;/* 设置所有属性过渡效果，持续0.3秒 */
 }
 
-.card-header {
-    border-bottom: 1px solid #eee;
-    padding-bottom: 16px;
-    margin-bottom: 20px;
+.btn-primary {
+    background: #4CAF50;/* 设置背景色为绿色 */
+    color: white;/* 设置文字颜色为白色 */
 }
 
-.card-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
+.btn-primary:hover {
+    background: #388E3C;/* 鼠标悬停时背景色变为深绿色 */
+    transform: translateY(-2px);/* 鼠标悬停时向上移动2px */
 }
 
-/* 表格样式 */
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
+ /* ========== 记录列表 ========== */
+ .records-list {
+     background: white;  /* 设置背景色为白色 */
+    border-radius: 12px;  /* 设置边框圆角为12px */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);  /* 添加阴影效果 */
+    overflow: hidden;  /* 隐藏溢出内容 */
+    margin: 25px 0;  /* 设置上下外边距为25px */
+ }
 
-.table th,
-.table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-}
+ .records-header {
+     padding: 20px;  /* 设置内边距为20px */
+    border-bottom: 1px solid #eee;  /* 设置下边框为1px实线浅灰色 */
+ }
 
-.table th {
-    background: #f8f9fa;
-    font-weight: 600;
-    color: #666;
-}
+ .record-item {
+     display: flex;  /* 使用弹性布局 */
+    justify-content: space-between;  /* 主轴方向子元素两端对齐 */
+    align-items: center;  /* 交叉轴方向子元素居中对齐 */
+    padding: 18px 20px;  /* 设置内边距，上下18px，左右20px */
+    border-bottom: 1px solid #f5f5f5;  /* 设置下边框为1px实线浅灰色 */
+ }
 
-.table tr:hover {
-    background: #f5f7fa;
-}
+ .record-item:hover { background: #f9f9f9; } /* 鼠标悬停时背景色变为浅灰色 */
 
-/* 消息提示样式 */
-.alert {
-    padding: 12px 16px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
+ .record-type {
+     width: 40px;  /* 设置宽度为40px */
+    height: 40px;  /* 设置高度为40px */
+    border-radius: 50%;  /* 设置边框圆角为50%，变成圆形 */
+    display: flex;  /* 使用弹性布局 */
+    align-items: center;  /* 垂直居中对齐 */
+    justify-content: center;  /* 水平居中对齐 */
+    color: white;  /* 设置文字颜色为白色 */
+    font-size: 18px;  /* 设置字体大小为18px */
+ }
 
-.alert-success {
-    background: #f0f9eb;
-    color: #67C23A;
-    border: 1px solid #e1f3d8;
-}
+ .income-type { background: #4CAF50; } /* 收入类型背景为绿色 */
+ .expense-type { background: #F44336; } /* 支出类型背景为红色 */
 
-.alert-warning {
-    background: #fdf6ec;
-    color: #E6A23C;
-    border: 1px solid #faecd8;
-}
+ .record-info {
+     flex: 1; /* 弹性增长因子为1，占据剩余空间 */
+     margin: 0 20px; /* 设置左右外边距为20px */
+ }
 
-.alert-error {
-    background: #fef0f0;
-    color: #F56C6C;
-    border: 1px solid #fde2e2;
-}
+ .record-category {
+     font-weight: 500;  /* 设置字体粗细为500 */
+    color: #333;  /* 设置文字颜色为深灰色 */
+    margin-bottom: 5px;  /* 设置下外边距为5px */
+ }
 
-.alert-info {
-    background: #f4f4f5;
-    color: #909399;
-    border: 1px solid #e9e9eb;
-}
+ .record-meta {
+     font-size: 13px;  /* 设置字体大小为13px */
+    color: #888;  /* 设置文字颜色为中灰色 */
+ }
 
-/* 加载动画 */
-.loading-spinner {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid #409EFF;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
+ .record-amount {
+     font-size: 20px;  /* 设置字体大小为20px */
+    font-weight: 600;  /* 设置字体粗细为600 */
+    font-family: 'Courier New', monospace;  /* 设置等宽字体 */
+    min-width: 120px;  /* 设置最小宽度为120px */
+    text-align: right;  /* 文字右对齐 */
+ }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+ .delete-btn {
+     background: none;  /* 无背景色 */
+    border: none;  /* 无边框 */
+    color: #888;  /* 设置文字颜色为中灰色 */
+    cursor: pointer;  /* 鼠标悬停时显示手型光标 */
+    padding: 8px;  /* 设置内边距为8px */
+    font-size: 18px;  /* 设置字体大小为18px */
+    transition: color 0.3s;  /* 设置文字颜色过渡效果，持续0.3秒 */
+ }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-    .container {
-        padding: 0 15px;
-    }
+ .delete-btn:hover { color: #F44336; } /* 鼠标悬停时文字颜色变为红色 */
 
-    .table th,
-    .table td {
-        padding: 8px 10px;
-        font-size: 14px;
-    }
+ /*编辑按钮*/
+ .edit-btn {
+     background: none;  /* 无背景色 */
+    border: none;  /* 无边框 */
+    color: #888;  /* 设置文字颜色为中灰色 */
+    cursor: pointer;  /* 鼠标悬停时显示手型光标 */
+    padding: 8px;  /* 设置内边距为8px */
+    font-size: 18px;  /* 设置字体大小为18px */
+    transition: color 0.3s;  /* 设置文字颜色过渡效果，持续0.3秒 */
+ }
 
-    .card {
-        padding: 16px;
-    }
-}
+ .edit-btn:hover {
+     color: #2196F3;  /* 鼠标悬停时文字颜色变为蓝色 */
+ }
 
-/* 工具类 */
-.text-center {
-    text-align: center;
-}
+ /* 搜索相关样式 */
+ .search-highlight {
+     background-color: #fffacd;  /* 设置背景色为浅黄色 */
+    font-weight: bold;  /* 设置字体加粗 */
+    color: #d35400;  /* 设置文字颜色为橙色 */
+    padding: 1px 3px;  /* 设置内边距，上下1px，左右3px */
+    border-radius: 2px;  /* 设置边框圆角为2px */
+ }
 
-.text-right {
-    text-align: right;
-}
+ .search-status {
+     font-size: 12px;  /* 设置字体大小为12px */
+    color: #7f8c8d;  /* 设置文字颜色为灰蓝色 */
+    margin-left: 10px;  /* 设置左外边距为10px */
+ }
 
-.text-left {
-    text-align: left;
-}
+ /* ========== 图表区域 ========== */
+ .chart-container {
+     background: white;  /* 背景色为白色 */
+    padding: 25px;  /* 内边距为25px */
+    border-radius: 12px;  /* 圆角为12px */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);  /* 添加阴影 */
+    margin: 25px 0;  /* 确保上下有边距 */
+ }
+ .charts-grid{
+     display: grid;  /* 网络布局 */
+    grid-template-columns: repeat(auto-fit,minmax(350px , 1fr));  /* 响应式列，每列最小350px */
+    gap: 25px;  /* 图表间距为25px */
+ }
+ .chart-container{
+     background: #f9f9f9;  /* 浅灰色背景 */
+    padding: 20px;  /* 内边距为20px */
+    border-radius: 10px;  /* 圆角为10px */
+    border: 1px solid #eee;  /* 边框为1px实线浅灰色 */
+    height: 100%;  /* 高度100% */
+ }
 
-.mt-10 { margin-top: 10px; }
-.mt-20 { margin-top: 20px; }
-.mt-30 { margin-top: 30px; }
-.mb-10 { margin-bottom: 10px; }
-.mb-20 { margin-bottom: 20px; }
-.mb-30 { margin-bottom: 30px; }
-.ml-10 { margin-left: 10px; }
-.ml-20 { margin-left: 20px; }
-.mr-10 { margin-right: 10px; }
-.mr-20 { margin-right: 20px; }
+ /* ========== 预警样式 ========== */
+ .alert-badge {
+     position: absolute;  /* 绝对定位 */
+    top: -5px;  /* 向上偏移5px */
+    right: -5px;  /* 向右偏移5px */
+    background: #F44336;  /* 背景色为红色 */
+    color: white;  /* 文字颜色为白色 */
+    border-radius: 50%;  /* 边框圆角50%，变成圆形 */
+    width: 20px;  /* 宽度20px */
+    height: 20px;  /* 高度20px */
+    display: flex;  /* 使用弹性布局 */
+    align-items: center;  /* 垂直居中对齐 */
+    justify-content: center;  /* 水平居中对齐 */
+    font-size: 12px;  /* 字体大小12px */
+    font-weight: bold;  /* 字体加粗 */
+ }
 
-.hidden {
-    display: none !important;
-}
+ .alert-warning {
+     background: #FFF3E0;  /* 背景色为浅橙色 */
+    border-left: 4px solid #FF9800;  /* 左边框为4px实线橙色*/
+    padding: 10px 15px;  /* 内边距，上下10px，左右15px */
+    margin: 10px 0;  /* 上下外边距10px */
+    border-radius: 8px;  /* 圆角8px */
+    color: #E65100;  /* 文字颜色为深橙色 */
+    font-size: 14px;  /* 字体大小14px */
+ }
 
-/* 浮动清除 */
-.clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
-}
+ /* ========== 分页控件 ========== */
+ .pagination-controls {
+     display: flex;  /* 弹性布局 */
+    align-items: center;  /* 垂直居中 */
+    gap: 5px;  /* 控件间距5px */
+ }
+
+ .pagination-btn {
+     background: #f5f5f5;  /* 背景色为浅灰色 */
+    border: 1px solid #ddd;  /* 边框为1px实线灰色 */
+    border-radius: 5px;  /* 圆角5px */
+    width: 36px;  /* 宽度36px */
+    height: 36px;  /* 高度36px */
+    display: flex;  /* 弹性布局 */
+    align-items: center;  /* 垂直居中 */
+    justify-content: center;  /* 水平居中 **/
+    cursor: pointer;  /* 手型光标 */
+    transition: all 0.3s;  /* 过渡效果0.3秒 */
+    font-size: 13px;  /* 字体大小13px */
+    color: #555;  /* 文字颜色为中灰色 */
+    font-weight: 500;  /* 字体粗细500 */
+    min-width: 60px;  /* 最小宽度60px，确保按钮有足够空间 */
+ }
+
+ .pagination-btn:hover {
+     background: #4CAF50;  /* 悬停背景色为绿色 */
+    color: white;  /* 悬停文字颜色为白色 */
+    border-color: #4CAF50;  /* 悬停边框颜色为绿色 */
+ }
+
+ .pagination-btn:disabled {
+     opacity: 0.5;  /* 禁用时半透明 */
+    cursor: not-allowed;  /* 禁用光标样式 */
+ }
+
+ .pagination-btn:disabled:hover {
+     background: #f5f5f5;  /* 禁用悬停背景色为浅灰色 */
+    color: inherit;  /* 禁用悬停文字颜色不变 */
+    border-color: #ddd;  /* 禁用悬停边框颜色为灰色 */
+ }
+
+ #pageInfo {
+     font-size: 14px;  /* 字体大小14px */
+    color: #666;  /* 文字颜色为灰色 */
+    min-width: 60px;  /* 最小宽度60px */
+    text-align: center;  /* 文字居中 */
+    margin: 0 10px;  /* 左右外边距10px */
+ }
+
+ /* ========== 响应式设计 ========== */
+ @media (max-width: 768px) {
+     .charts-grid{
+         grid-template-columns: 1fr;  /* 小屏幕单列显示 */
+     gap: 20px;  /* 减少间距为20px */
+     }
+     .chart-container{
+         padding: 15px;  /* 减少内边距为15px */
+     }
+     #incomeChart,#expenseChart{
+         height: 220px !important;  /* 调整图表高度为220px，提高优先级 */
+     }
+ }
+
+ /* ========== 空状态 ========== */
+ .empty-state {
+    text-align: center;  /* 文字居中对齐 */
+    padding: 40px 20px;  /* 内边距，上下40px，左右20px */
+    color: #888;  /* 文字颜色为中灰色 */
+ }
+
+ /* ========== 加载状态 ========== */
+
+ .loading {
+    text-align: center;  /* 文字居中对齐 */
+    padding: 40px;  /* 内边距40px */
+    color: #4CAF50;  /* 文字颜色为绿色 */
+ }
+
+ .loading-spinner {
+    display: inline-block;  /* 内联块级元素 */
+    width: 30px;  /* 宽度30px */
+    height: 30px;  /* 高度30px */
+    border: 3px solid rgba(76, 175, 80, 0.3);  /* 边框3px半透明绿色 */
+    border-top: 3px solid #4CAF50;  /* 上边框3px绿色实线 */
+    border-radius: 50%;  /* 边框圆角50%，变成圆形 */
+    animation: spin 1s linear infinite;  /* 应用spin动画，持续1秒，线性运动，无限循环 */
+ }
+
+ @keyframes spin {
+     0% { transform: rotate(0deg); } /* 动画起始，旋转0度 */
+ 100% { transform: rotate(360deg); } /* 动画结束，旋转360度 */
+ }

@@ -1,296 +1,298 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>羊氏记账 - 登录</title>
+<!DOCTYPE html><!--声明文档类型是HTML，告诉浏览器以标准模式渲染页面-->
+<html lang="zh-CN"><!-- HTML根元素，lang属性声明页面主要语言为简体中文 -->
+<head><!-- 文档元数据区域，包含页面配置信息，不直接显示 -->
+  <meta charset="UTF-8"><!-- 声明字符编码是UTF-8，支持中文字符显示 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- 视口设置：宽度等于设备宽度，初始放缩100%，用于移动端适配 -->
+  <title>羊氏记账 - 登录</title><!-- 浏览器选项卡上显示的页面标题 -->
   <style>
+    /* ========== 全局样式重置 ========== */
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      margin: 0;/* 清除所有元素默认外边距 */
+      padding: 0;/* 清除所有元素默认内边距 */
+      box-sizing: border-box;/* 盒子模型设为边框计算：宽高包含内边距和边框，避免布局溢出 */
     }
 
     body {
-      font-family: 'Microsoft YaHei', sans-serif;
-      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+      font-family: 'Microsoft YaHei', sans-serif;/* 首选微软雅黑，降级为无衬线字体 */
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);/* 紫色到蓝色的渐变背景，角度135° */
+      min-height: 100vh;/* 最小高度为视口高度，确保背景铺满全屏 */
+      display: flex;/* 开启flex弹性布局 */
+      justify-content: center;/* 主轴居中：水平居中 */
+      align-items: center;/* 交叉轴居中：垂直居中 */
+      padding: 20px;/* 给body添加内边距，防止小屏幕时内容贴边 */
     }
 
-    .login-container {
-      width: 100%;
-      max-width: 400px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-      backdrop-filter: blur(10px);
+    .login-container {/* 登录卡片容器样式 */
+      width: 100%;/* 宽度占满父容器 */
+      max-width: 400px;/* 最大宽度400px，适配大屏但不会过宽 */
+      background: rgba(255, 255, 255, 0.95);/* 半透白背景，透明度0.95，轻微磨砂感 */
+      border-radius: 20px;/* 20px圆角，卡片风格 */
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);/* 大而柔和的阴影：x偏移0，y偏移20，模糊40，黑色半透 */
+      overflow: hidden;/* 隐藏溢出内容，保证圆角裁切效果 */
+      backdrop-filter: blur(10px);/* 背景模糊10px，增强磨砂玻璃质感（兼容现代浏览器） */
     }
 
-    .login-header {
-      background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
-      color: white;
-      padding: 40px 30px;
-      text-align: center;
+    .login-header {/* 登录头部区域样式 */
+      background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);/* 绿色渐变，浅绿到深绿，体现记账应用健康感 */
+      color: white;/* 文字颜色为白色 */
+      padding: 40px 30px;/* 上下内边距40px，左右30px */
+      text-align: center;/* 文本居中 */
     }
 
-    .login-header h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-      font-weight: 600;
+    .login-header h1 {/* 头部主题样式 */
+      font-size: 32px;/* 主标题字号32px */
+      margin-bottom: 10px;/* 底部外边距10px，与下方p标签拉开距离 */
+      font-weight: 600;/* 自重600，半粗体 */
     }
 
-    .login-header p {
-      opacity: 0.9;
-      font-size: 16px;
+    .login-header p {/* 头部副标题/标语样式 */
+      opacity: 0.9;/* 不透明度0.9，轻微透明 */
+      font-size: 16px;/* 副标题字号16px */
     }
 
-    .login-form {
-      padding: 40px 35px;
+    .login-form {/* 登录表单区域样式 */
+      padding: 40px 35px;/* 表单内边距：上40，左右35，下40，紧凑美观 */
     }
 
-    .form-group {
-      margin-bottom: 25px;
+    .form-group {/* 表单项容器样式：包含标签，输入框，错误提示 */
+      margin-bottom: 25px;/* 每个表单组底部间距25px */
     }
 
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      color: #333;
-      font-weight: 500;
-      font-size: 14px;
+    .form-group label {/* 表单项标签样式 */
+      display: block;/* 块级元素，独占一行，确保标签在上方 */
+      margin-bottom: 8px;/* 标签与输入框间距8px */
+      color: #333;/* 深灰色文字，保证可读性 */
+      font-weight: 500;/* 字重500，中等粗细 */
+      font-size: 14px;/* 标签字号14px，比输入框小一点，体现层级 */
     }
 
-    .input-with-icon {
-      position: relative;
+    .input-with-icon {/* 带图标的输入框容器样式 */
+      position: relative;/* 相对定位，为绝对定位的子元素提供参照 */
     }
 
-    .input-with-icon i {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #4CAF50;
-      font-size: 18px;
+    .input-with-icon i {/* 带图标的输入框容器样式 */
+      position: absolute;/* 绝对定位，相对于.input-with-icon */
+      left: 15px;/* 距离左侧15px */
+      top: 50%;/* 顶部距离父元素50% */
+      transform: translateY(-50%);/* Y轴向上移动自身高度50%，实现垂直居中 */
+      color: #4CAF50;/* 图标颜色为主绿色，与应用主色调统一 */
+      font-size: 18px;/* 图标字号18px，略大于输入框文字 */
     }
 
-    .form-control {
-      width: 100%;
-      padding: 16px 16px 16px 45px;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      font-size: 16px;
-      transition: all 0.3s ease;
-      background: #f8f9fa;
+    .form-control {/* 输入框基础样式 */
+      width: 100%;/* 宽度100%填充父容器 */
+      padding: 16px 16px 16px 45px;/* 上16，右16，下16，左45（为图标留出空间） */
+      border: 2px solid #e0e0e0;/* 浅灰色边框，2px宽度 */
+      border-radius: 10px;/* 10px圆角，现代感 */
+      font-size: 16px;/* 输入文字大小16px，避免移动端自动缩放 */
+      transition: all 0.3s ease;/* 所有属性变化0.3秒缓动，用于焦点过渡 */
+      background: #f8f9fa;/* 浅灰色背景，区分于纯白，按时可输入状态 */
     }
 
-    .form-control:focus {
-      outline: none;
-      border-color: #4CAF50;
-      background: white;
-      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    .form-control:focus {/* 输入框焦点状态样式 */
+      outline: none;/* 移除浏览器默认的焦点外圈轮廓 */
+      border-color: #4CAF50;/* 边框变为绿色，提示焦点状态 */
+      background: white;/* 背景变为纯白，增强视觉反馈 */
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);/* 外发光效果：0偏移0模糊，3px扩展，半透绿 */
     }
 
-    .login-btn {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 10px;
+    .login-btn {/* 登录/注册按钮样式 */
+      width: 100%;/* 宽度100%填充 */
+      padding: 18px;/* 内边距18px，让按钮更饱满 */
+      background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);/* 同头部一致的绿色渐变，保持品牌统一 */
+      color: white;/* 文字白色 */
+      border: none;/* 无边框 */
+      border-radius: 10px;/* 10px圆角，与输入框统一 */
+      font-size: 18px;/* 按钮字号18px，略大于普通文字 */
+      font-weight: 600;/* 字重600，半粗 */
+      cursor: pointer;/* 鼠标悬停为手型，提示可点击 */
+      transition: all 0.3s ease;/* 缓动过度效果 */
+      margin-top: 10px;/* 顶部外边距10px，与上面表单项留白 */
     }
 
-    .login-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+    .login-btn:hover {/* 按钮悬停状态样式 */
+      transform: translateY(-2px);/* 悬停时向上平移2px，微动效 */
+      box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);/* 阴影增强，更突出 */
     }
 
-    .login-btn:active {
-      transform: translateY(0);
+    .login-btn:active {/* 按钮点击状态样式 */
+      transform: translateY(0);/* 点击时恢复原位，模拟按下回弹 */
     }
 
-    .form-footer {
-      text-align: center;
-      margin-top: 30px;
-      padding-top: 25px;
-      border-top: 1px solid #eee;
+    .form-footer {/* 表单底部链接区域样式 */
+      text-align: center;/* 文本居中 */
+      margin-top: 30px;/* 顶部外边距30px，与上方分隔 */
+      padding-top: 25px;/* 顶部内边距25px，为分割线留空间 */
+      border-top: 1px solid #eee;/* 浅灰色上边框作为分割线 */
     }
 
-    .form-footer a {
-      color: #4CAF50;
-      text-decoration: none;
-      font-size: 14px;
-      margin: 0 10px;
+    .form-footer a {/* 底部链接文字样式 */
+      color: #4CAF50;/* 链接文字为绿色 */
+      text-decoration: none;/* 移除下划线 */
+      font-size: 14px;/* 字号14px */
+      margin: 0 10px;/* 左右外边距10px，间隔开 */
     }
 
-    .form-footer a:hover {
-      text-decoration: underline;
+    .form-footer a:hover {/* 底部链接悬停样式 */
+      text-decoration: underline;/* 悬停时添加下划线，提示可点击 */
     }
 
-    .error-message {
-      color: #f44336;
-      font-size: 14px;
-      margin-top: 8px;
-      display: none;
+    .error-message {/* 错误提示信息样式 */
+      color: #f44336;/* 错误提示文字颜色：红色 */
+      font-size: 14px;/* 字号14px */
+      margin-top: 8px;/* 顶部外边距8px，与输入框分离 */
+      display: none;/* 默认隐藏，仅在有错误的时候显示 */
     }
 
-    .demo-credentials {
-      background: #f0f9f0;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
-      font-size: 14px;
-      color: #2E7D32;
-      border: 1px solid #c8e6c9;
+    .demo-credentials {/* 演示凭据提示框样式 */
+      background: #f0f9f0;/* 浅绿背景，柔和提示 */
+      padding: 15px;/* 内边距15px */
+      border-radius: 10px;/* 10px圆角 */
+      margin-top: 20px;/* 顶部外边距20px，与登录按钮分离 */
+      font-size: 14px;/* 字号14px */
+      color: #2E7D32;/* 深绿色文字 */
+      border: 1px solid #c8e6c9;/* 浅绿色边框 */
     }
 
-    .demo-credentials p {
-      margin: 5px 0;
+    .demo-credentials p {/* 演示凭据内的段落样式 */
+      margin: 5px 0;/* 上下外边距5px，行间紧凑 */
     }
 
-    @media (max-width: 480px) {
-      .login-container {
-        margin: 20px;
+    @media (max-width: 480px) {/* 响应式设计：手机竖屏适配 */
+      .login-container {/* 登录卡片容器样式 */
+        margin: 20px;/* 添加外边距，防止卡片贴边 */
       }
 
-      .login-form {
-        padding: 30px 25px;
+      .login-form {/* 登录表单区域样式 */
+        padding: 30px 25px;/* 减小内边距，适应小屏 */
       }
 
-      .login-header {
-        padding: 30px 20px;
+      .login-header {/* 登录头部区域样式 */
+        padding: 30px 20px;/* 减小头部内边距 */
       }
     }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"><!-- Font Awesome 6.0 图标库，用于显示用户、锁、加载动画等图标 -->
 </head>
 <body>
-<div class="login-container">
-  <div class="login-header">
+<div class="login-container"><!-- 登录卡片容器 -->
+  <div class="login-header"><!-- 头部区域：应用名称与标语 -->
     <h1>羊氏记账</h1>
     <p>简单、智能的个人记账工具</p>
   </div>
 
-  <form class="login-form" id="loginForm">
-    <div class="form-group">
-      <label for="username">用户名</label>
-      <div class="input-with-icon">
-        <i class="fas fa-user"></i>
+  <form class="login-form" id="loginForm"><!-- 登录表单：id用于JavaScript操作，method默认为GET，perventDefault会阻止默认提交 -->
+    <div class="form-group"><!-- 用户名表单项容器 -->
+      <label for="username">用户名</label><!-- for属性关联输入框id，点击标签聚焦输入框 -->
+      <div class="input-with-icon"><!-- 带图标的输入框容器 -->
+        <i class="fas fa-user"></i><!-- Font Awesome用户图标 -->
         <input type="text" id="username" class="form-control"
-               placeholder="请输入用户名" required autofocus>
+               placeholder="请输入用户名" required autofocus><!-- required属性：浏览器自带非空验证（但主要用JS）；autofocus：页面加载时自动聚焦到此输入框 -->
       </div>
-      <div class="error-message" id="usernameError"></div>
+      <div class="error-message" id="usernameError"></div><!-- 用户名错误提示容器，初始隐蔽 -->
     </div>
 
-    <div class="form-group">
+    <div class="form-group"><!-- 密码表单项容器 -->
       <label for="password">密码</label>
-      <div class="input-with-icon">
-        <i class="fas fa-lock"></i>
+      <div class="input-with-icon"><!-- 带图标的输入框容器 -->
+        <i class="fas fa-lock"></i><!-- 锁图标 -->
         <input type="password" id="password" class="form-control"
-               placeholder="请输入密码" required>
+               placeholder="请输入密码" required><!-- type="password" 输入内容以圆点掩码显示 -->
       </div>
-      <div class="error-message" id="passwordError"></div>
+      <div class="error-message" id="passwordError"></div><!-- 密码错误提示容器 -->
     </div>
 
-    <button type="submit" class="login-btn">
-      <i class="fas fa-sign-in-alt"></i> 登录 / 注册
+    <button type="submit" class="login-btn"><!-- 登录/注册按钮，提交表单时会触发JS验证和存储逻辑 -->
+      <i class="fas fa-sign-in-alt"></i> 登录 / 注册 <!-- 登录图标，文字提示此按钮兼具登录和注册功能 -->
     </button>
 
-    <div class="demo-credentials">
+    <div class="demo-credentials"><!-- 演示凭据提示区域，向用户展示示例账户 -->
       <p>✨ 首次登陆请点击立即注册设置新用户 </p>
       <p>📝 示例：用户：caiyihong 密码：123456</p>
     </div>
 
-    <div class="form-footer">
-      <a href="register.html">立即注册</a>
-      <span style="color: #cccccc;">|</span>
-      <a href="#" onclick="forgotPassword()">忘记密码</a>
+    <div class="form-footer"><!-- 表单底部链接区域 -->
+      <a href="register.html">立即注册</a><!-- 链接到注册页面（占位） -->
+      <span style="color: #cccccc;">|</span><!-- 分隔符，灰色竖线 -->
+      <a href="#" onclick="forgotPassword()">忘记密码</a><!-- 点击调用JS函数forgotPassword -->
       <span style="color: #ccc;">|</span>
-      <a href="#" onclick="guestLogin()">游客体验</a>
+      <a href="#" onclick="guestLogin()">游客体验</a><!-- 点击调用JS函数guestLogin -->
     </div>
   </form>
 </div>
 
 <script>
-  // 1. 登录表单提交处理
+  // 登录表单提交处理函数-监听表单的submit事件
   document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+    e.preventDefault();// 阻止表单的默认提交行为（刷新页面），改为由JS处理
 
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
-    let isValid = true;
+    const username = document.getElementById('username').value.trim();// 获取用户名并去除首尾空格
+    const password = document.getElementById('password').value.trim();// 获取密码并去除空格（密码通常不应含首尾空格，但用户可能误触）
+    let isValid = true;// 表单整体是否有效标识，初始为true
 
     // 清除之前的错误信息
     document.getElementById('usernameError').style.display = 'none';
     document.getElementById('passwordError').style.display = 'none';
 
     // 验证用户名
-    if (!username) {
-      document.getElementById('usernameError').textContent = '请输入用户名';
-      document.getElementById('usernameError').style.display = 'block';
-      isValid = false;
-    } else if (username.length < 3) {
+    if (!username) {// 用户名为空
+      document.getElementById('usernameError').textContent = '请输入用户名';// 设置错误文本
+      document.getElementById('usernameError').style.display = 'block';// 显示错误消息
+      isValid = false;// 标记验证失败
+    } else if (username.length < 3) {// 用户名长度小于3字符
       document.getElementById('usernameError').textContent = '用户名至少3个字符';
-      document.getElementById('usernameError').style.display = 'block';
-      isValid = false;
+      document.getElementById('usernameError').style.display = 'block';// 显示错误消息
+      isValid = false;//标记验证失败
     }
 
     // 验证密码
-    if (!password) {
+    if (!password) {// 密码为空
       document.getElementById('passwordError').textContent = '请输入密码';
       document.getElementById('passwordError').style.display = 'block';
       isValid = false;
-    } else if (password.length < 6) {
+    } else if (password.length < 6) {// 密码长度小于6
       document.getElementById('passwordError').textContent = '密码至少6个字符';
       document.getElementById('passwordError').style.display = 'block';
       isValid = false;
     }
 
+    // 如果前端验证通过
     if (isValid) {
-      // 显示加载状态
-      const loginBtn = document.querySelector('.login-btn');
-      const originalText = loginBtn.innerHTML;
-      loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 登录中...';
-      loginBtn.disabled = true;
+      // 显示加载状态：修改按钮文字，禁用按钮防止重复提交
+      const loginBtn = document.querySelector('.login-btn');// 获取登录按钮元素
+      const originalText = loginBtn.innerHTML;// 保存原始按钮HTML内容，用于后续恢复
+      loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 登录中...';// 改为加载动画和“登录中”文字
+      loginBtn.disabled = true;// 禁用按钮，防止二次点击
 
-      // 模拟网络请求延迟
+      // 模拟网络请求延迟-实际开发可替换为真实的Ajax请求
       setTimeout(() => {
         // 获取本地存储的用户数据
-        const users = JSON.parse(localStorage.getItem('accountingUsers') || '[]');
-        const existingUser = users.find(u => u.username === username);
+        const users = JSON.parse(localStorage.getItem('accountingUsers') || '[]');// 从localStorage获取'accountingUsers'键，如果不存在则初始化为空数组，JSON.parse解析字符串为对象
+        const existingUser = users.find(u => u.username === username); // 查找用户名是否已存在
 
         if (existingUser) {
           // 验证密码
           if (existingUser.password !== password) {
-            alert('密码错误！');
-            loginBtn.innerHTML = originalText;
-            loginBtn.disabled = false;
-            return;
+            alert('密码错误！');// 弹出错误提示
+            loginBtn.innerHTML = originalText;// 恢复按钮原始文字
+            loginBtn.disabled = false;// 启用按钮
+            return;// 终止后续执行
           }
         } else {
           // 新用户注册
-          users.push({
-            username: username,
-            password: password,
-            createdAt: new Date().toISOString()
+          users.push({// 不存在用户：视为新用户注册，将用户名和密码存入用户数组
+            username: username,// 用户名
+            password: password,// 密码（实际项目应加密存储，此处仅为教学演示）
+            createdAt: new Date().toISOString()// 注册时间，ISO格式字符串
           });
-          localStorage.setItem('accountingUsers', JSON.stringify(users));
-          alert(`欢迎 ${username}！注册成功！`);
+          localStorage.setItem('accountingUsers', JSON.stringify(users));// 将更新后的数组存回localStorage
+          alert(`欢迎 ${username}！注册成功！`);// 注册成功提示
         }
 
         // 存储当前用户登录状态
         localStorage.setItem('currentUser', JSON.stringify({
-          username: username,
-          loginTime: new Date().toISOString()
+          username: username,// 当前登录的用户名
+          loginTime: new Date().toISOString()// 登录时间
         }));
 
         // 初始化用户的记账数据（如果新用户）
@@ -298,58 +300,57 @@
           localStorage.setItem(`accountingData_${username}`, JSON.stringify([]));
         }
 
-        // 跳转到主页面
+        // 跳转到主页面，模拟登录/注册成功后的页面跳转
         window.location.href = 'main.html';
-      }, 1000);
+      }, 1000);// 延迟1000毫秒（1秒），模拟网络延迟
     }
   });
 
-  // 2. 快捷功能
-  function forgotPassword() {
+  //快捷功能函数
+  function forgotPassword() {// 忘记密码功能：简单提示后引导重新注册
     alert('请联系管理员重置密码\n或使用其他用户名重新注册');
   }
 
+  // 游客登录函数
   function guestLogin() {
-    if (confirm('游客模式功能有限，确定继续吗？')) {
-      localStorage.setItem('currentUser', JSON.stringify({
-        username: 'guest',
-        loginTime: new Date().toISOString(),
-        isGuest: true
+    if (confirm('游客模式功能有限，确定继续吗？')) {// 确认对话框，用户确认后返回true
+      localStorage.setItem('currentUser', JSON.stringify({// 存储游客用户信息，带有isGuest:true标识
+        username: 'guest',// 固定用户名guest
+        loginTime: new Date().toISOString(),// 登录时间
+        isGuest: true// 标识为游客
       }));
-      window.location.href = 'main.html';
+      window.location.href = 'main.html';// 跳转主页面
     }
   }
 
-  // 3. 回车键提交
+  //回车键交互增强
   document.getElementById('username').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-      document.getElementById('password').focus();
+    if (e.key === 'Enter') {// 如果按下的是回车键
+      document.getElementById('password').focus();// 焦点移到密码框
     }
   });
 
+  // 密码输入框监听键盘按键事件
   document.getElementById('password').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-      document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+    if (e.key === 'Enter') {// 如果按下的是回车键
+      document.getElementById('loginForm').dispatchEvent(new Event('submit'));// 手动触发表单的submit事件，进行登录操作
     }
   });
 
-  // 4. 页面加载时检查是否已登录
+  //页面加载时检查是否已登录
   window.addEventListener('DOMContentLoaded', function() {
-    const currentUser = localStorage.getItem('currentUser');
-
-    if (currentUser) {
+    const currentUser = localStorage.getItem('currentUser'); // 获取当前用户登录信息
+    if (currentUser) {// 如果存在currentUser键
       try {
-        const user = JSON.parse(currentUser);
-        if (user.username && user.username !== 'guest') {
-          // 已登录，跳转到主页面
-          window.location.href = 'main.html';
+        const user = JSON.parse(currentUser);// 尝试解析JSON
+        if (user.username && user.username !== 'guest') {// 如果存在用户名，且用户名不是guest（正常登录用户）
+          window.location.href = 'main.html'; //已登录状态，直接跳转到主页面，避免重复登录
         }
-      } catch (e) {
+      } catch (e) {// 解析失败（数据损坏等），打印错误到控制台，停留在登录页让用户重新登录
         console.log('解析用户数据失败，重新登录');
       }
     }
-
-    console.log('羊氏记账登录页面已加载');
+    console.log('羊氏记账登录页面已加载');// 控制台输出日志，表明页面已加载完成，方便调试
   });
 </script>
 </body>

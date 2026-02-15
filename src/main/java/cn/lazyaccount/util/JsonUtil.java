@@ -1,3 +1,4 @@
+//提供统一的JSON处理功能
 package cn.lazyaccount.util;
 
 import com.google.gson.Gson; // 导入Gson类

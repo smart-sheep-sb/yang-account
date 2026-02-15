@@ -1,3 +1,4 @@
+//账单数据的实体模型，对应数据库中的t_bill表
 package cn.lazyaccount.model;
 
 import java.util.Date; // 导入日期类

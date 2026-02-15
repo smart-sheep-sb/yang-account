@@ -1,5 +1,8 @@
+//用户的实体模型，对应数据库中的t_user表
 package cn.lazyaccount.model;
+
 import java.util.Date;//导入日期类
+
 public class User {
     private Integer id;//用户ID，对应数据库的id字段
     private String username;//用户名称，登录使用，对应数据库的username字段

@@ -1,0 +1,32 @@
+# IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# 编译输出
+target/
+build/
+*.class
+*.jar
+*.war
+*.ear
+
+# 日志
+*.log
+logs/
+
+# 数据库文件
+*.db
+*.db-journal
+account_book.db
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 环境配置文件
+*.properties
+*.yml
+*.yaml

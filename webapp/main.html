@@ -5,373 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>羊氏记账</title>
 
-    <!-- 精简依赖 -->
+    <!-- 第三方库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
 
-    <style>
-        /* ========== 基础重置 ========== */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Microsoft YaHei', sans-serif;
-            background: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        /* ========== 顶部导航 ========== */
-        .navbar {
-            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
-            color: white;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-info {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-
-        .logout-btn:hover { background: rgba(255,255,255,0.3); }
-        /* ========== 主标题 ========== */
-        .main-title {
-            text-align: center;
-            padding: 30px 0 20px;
-            color: #2c3e50;
-        }
-
-        .main-title h1 {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .main-title p {
-            color: #7f8c8d;
-            font-size: 16px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* ========== 主容器 ========== */
-        .container{
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px 40px;
-        }
-
-        /* ========== 主容器 ========== */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* ========== 统计卡片 ========== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 25px 0;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .stat-value {
-            font-size: 32px;
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
-        }
-
-        .income { color: #4CAF50; }
-        .expense { color: #F44336; }
-        .balance { color: #2196F3; }
-
-        /* ========== 记账表单 ========== */
-        .record-form {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            margin: 25px 0;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .form-group { margin-bottom: 15px; }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #555;
-            font-size: 14px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #4CAF50;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #388E3C;
-            transform: translateY(-2px);
-        }
-
-        /* ========== 记录列表 ========== */
-        .records-list {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            overflow: hidden;
-            margin: 25px 0;
-        }
-
-        .records-header {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .record-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 20px;
-            border-bottom: 1px solid #f5f5f5;
-        }
-
-        .record-item:hover { background: #f9f9f9; }
-
-        .record-type {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-        }
-
-        .income-type { background: #4CAF50; }
-        .expense-type { background: #F44336; }
-
-        .record-info {
-            flex: 1;
-            margin: 0 20px;
-        }
-
-        .record-category {
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .record-meta {
-            font-size: 13px;
-            color: #888;
-        }
-
-        .record-amount {
-            font-size: 20px;
-            font-weight: 600;
-            font-family: 'Courier New', monospace;
-            min-width: 120px;
-            text-align: right;
-        }
-
-        .delete-btn {
-            background: none;
-            border: none;
-            color: #888;
-            cursor: pointer;
-            padding: 8px;
-            font-size: 18px;
-            transition: color 0.3s;
-        }
-
-        .delete-btn:hover { color: #F44336; }
-
-        /* ========== 图表区域 ========== */
-        .chart-container {
-            background: white;/*背景图为白色*/
-            padding: 25px;/*内边距*/
-            border-radius: 12px;/*圆角*/
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);/*阴影*/
-            margin: 25px 0;/*确保上下有边距*/
-        }
-        .charts-grid{
-            display: grid;/*网络布局*/
-            grid-template-columns: repeat(auto-fit,minmax(350px , 1fr));/*响应序列*/
-            gap: 25px;/*图表间距*/
-        }
-        .chart-container{
-            background: #f9f9f9;/*浅灰色背景*/
-            padding: 20px;/*内边距*/
-            border-radius: 10px;/*圆角*/
-            border: 1px solid #eee;/*边框*/
-            height: 100%;/*高度100%*/
-        }
-
-        /* ========== 分页控件 ========== */
-        .pagination-controls {
-            display: flex; /* 弹性布局 */
-            align-items: center; /* 垂直居中 */
-            gap: 5px; /* 控件间距 */
-        }
-
-        .pagination-btn {
-            background: #f5f5f5; /* 背景色 */
-            border: 1px solid #ddd; /* 边框 */
-            border-radius: 5px; /* 圆角 */
-            width: 36px; /* 宽度 */
-            height: 36px; /* 高度 */
-            display: flex; /* 弹性布局 */
-            align-items: center; /* 垂直居中 */
-            justify-content: center; /* 水平居中 */
-            cursor: pointer; /* 手型光标 */
-            transition: all 0.3s; /* 过渡效果 */
-            font-size: 13px; /* 字体大小 */
-            color: #555; /* 文字颜色 */
-            font-weight: 500; /* 字体粗细 */
-            min-width: 60px; /* 最小宽度，确保按钮有足够空间 */
-        }
-
-        .pagination-btn:hover {
-            background: #4CAF50; /* 悬停背景色 */
-            color: white; /* 悬停文字颜色 */
-            border-color: #4CAF50; /* 悬停边框颜色 */
-        }
-
-        .pagination-btn:disabled {
-            opacity: 0.5; /* 禁用时半透明 */
-            cursor: not-allowed; /* 禁用光标 */
-        }
-
-        .pagination-btn:disabled:hover {
-            background: #f5f5f5; /* 禁用悬停背景 */
-            color: inherit; /* 禁用悬停文字颜色 */
-            border-color: #ddd; /* 禁用悬停边框 */
-        }
-
-        #pageInfo {
-            font-size: 14px; /* 字体大小 */
-            color: #666; /* 文字颜色 */
-            min-width: 60px; /* 最小宽度 */
-            text-align: center; /* 居中 */
-            margin: 0 10px;/*左右间距*/
-        }
-
-        /* ========== 响应式设计 ========== */
-        @media (max-width: 768px) {
-           .charts-grid{
-               grid-template-columns: 1fr;/*小屏幕单列显示*/
-               gap: 20px;/*减少边距*/
-           }
-            .chart-container{
-                padding: 15px;/*减少内边距*/
-            }
-            #incomeChart,#expenseChart{
-                height: 220px !important;/*调整图表高度*/
-            }
-        }
-
-        /* ========== 空状态 ========== */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #888;
-        }
-
-        /* ========== 加载状态 ========== */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #4CAF50;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 3px solid rgba(76, 175, 80, 0.3);
-            border-top: 3px solid #4CAF50;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -382,18 +21,23 @@
         <span>羊氏记账</span>
     </div>
     <div class="user-info" id="welcomeMessage">加载中...</div>
-    <button class="logout-btn" onclick="logout()">
-        <i class="fas fa-sign-out-alt"></i> 退出
-    </button>
+    <div style="display: flex; gap: 10px;">
+        <button class="logout-btn" onclick="openAlertSettings()" title="预警设置">
+            <i class="fas fa-bell"></i> 预警
+        </button>
+        <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> 退出
+        </button>
+    </div>
 </nav>
 
 <!-- 主内容 -->
 <div class="container">
-        <!-- 主标题 -->
-        <div class="main-title">
-            <h1>羊氏记账管理系统</h1>
-            <p>轻松管理您的每一笔收支，让财务管理更简单</p>
-        </div>
+    <!-- 主标题 -->
+    <div class="main-title">
+        <h1>羊氏记账管理系统</h1>
+        <p>轻松管理您的每一笔收支，让财务管理更简单</p>
+    </div>
 
     <!-- 统计卡片 -->
     <div class="stats-grid">
@@ -461,31 +105,28 @@
     <div class="records-list">
         <div class="records-header" style="display: flex;justify-content: space-between;align-items: center;">
             <div style="display: flex;align-items: center;gap: 15px;">
-            <h2 style="margin: 0;">最近记录</h2>
-                <!--搜索框-->
+                <h2 style="margin: 0;">最近记录</h2>
+                <select id="searchMode" style="padding: 6px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; background: #f9f9f9;">
+                    <option value="local">本地搜索</option>
+                    <option value="database">数据库搜索</option>
+                </select>
                 <div style="display: flex; align-items: center; position: relative;">
                     <input type="text" id="searchInput" placeholder="搜索备注..."
                            style="width: 160px; padding: 6px 30px 6px 12px; border: 1px solid #ddd; border-radius: 16px; font-size: 13px; background: #f9f9f9; transition: all 0.3s;"
                            onkeyup="handleSearchInput(event)"
-                           onfocus="this.style.width='200px'; this.style.background='white'; this.style.borderColor='#4CAF50';"
-                           onblur="this.style.width='160px'; this.style.background='#f9f9f9'; this.style.borderColor='#ddd';">
+                           onfocus="handleSearchFocus(this)"
+                           onblur="handleSearchBlur(this)">
                     <button onclick="performSearch()"
-                            style="position: absolute; right: 6px; background: none; border: none; color: #888; cursor: pointer; padding: 4px;"
-                            onmouseover="this.style.color='#4CAF50'"
-                            onmouseout="this.style.color='#888'">
+                            style="position: absolute; right: 6px; background: none; border: none; color: #888; cursor: pointer; padding: 4px;">
                         <i class="fas fa-search" style="font-size: 12px;"></i>
                     </button>
                 </div>
             </div>
 
             <div class="pagination-controls">
-                <button class="pagination-btn" onclick="prevPage()" id="prevBtn" disabled>
-                    上一页
-                </button>
+                <button class="pagination-btn" onclick="prevPage()" id="prevBtn" disabled>上一页</button>
                 <span id="pageInfo" style="margin: 0 10px;">第1页</span>
-                <button class ="pagination-btn" onclick="nextPage()" id="nextBtn">
-                    下一页
-                </button>
+                <button class="pagination-btn" onclick="nextPage()" id="nextBtn">下一页</button>
             </div>
         </div>
         <div id="recordsContainer">
@@ -496,701 +137,111 @@
         </div>
     </div>
 
-    <!-- 图表区域 -->
-    <div class="charts-section">
-        <h2 style="margin-bottom: 20px; text-align: center;">分类统计</h2>
+    <div class="search-status" id="searchStatus" style="display: none;">按 Enter 搜索</div>
 
-        <div class="charts-grid">
-            <!-- 收入图表 -->
-            <div class="chart-container">
-                <h3 style="margin-bottom: 15px; color: #4CAF50;">收入分类</h3>
-                <canvas id="incomeChart" style="width: 100%; height: 250px;"></canvas>
+    <!-- 编辑记录弹窗 -->
+    <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 25px; border-radius: 12px; width: 90%; max-width: 500px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="margin: 0; color: #333;">编辑记录</h2>
+                <button onclick="closeEditModal()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #888;">&times;</button>
             </div>
 
-            <!-- 支出图表 -->
-            <div class="chart-container">
-                <h3 style="margin-bottom: 15px; color: #F44336;">支出分类</h3>
-                <canvas id="expenseChart" style="width: 100%; height: 250px;"></canvas>
+            <input type="hidden" id="editRecordId">
+
+            <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div class="form-group">
+                    <label class="form-label">类型</label>
+                    <select id="editRecordType" class="form-control">
+                        <option value="income">收入</option>
+                        <option value="expense">支出</option>
+                    </select>
                 </div>
+                <div class="form-group">
+                    <label class="form-label">金额 (¥)</label>
+                    <input type="number" id="editAmount" class="form-control" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">分类</label>
+                    <select id="editCategory" class="form-control">
+                        <option value="food">餐饮</option>
+                        <option value="transport">交通</option>
+                        <option value="shopping">购物</option>
+                        <option value="housing">住房</option>
+                        <option value="entertainment">娱乐</option>
+                        <option value="salary">工资</option>
+                        <option value="investment">投资</option>
+                        <option value="other">其他</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">日期</label>
+                    <input type="date" id="editRecordDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">备注</label>
+                    <input type="text" id="editDescription" class="form-control" placeholder="备注（可选）">
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button class="btn" style="background: #eee; color: #333;" onclick="closeEditModal()">取消</button>
+                <button class="btn btn-primary" onclick="saveEditRecord()">保存修改</button>
             </div>
         </div>
     </div>
 
+    <!-- 预警设置弹窗 -->
+    <div id="alertModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="margin: 0; color: #333;">月度预警设置</h2>
+                <button onclick="closeAlertModal()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #888;">&times;</button>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <p style="color: #666; margin-bottom: 15px;">设置每月支出上限，超出会显示预警</p>
+                <div class="form-group">
+                    <label class="form-label">月度支出上限 (¥)</label>
+                    <input type="number" id="monthlyLimit" class="form-control" placeholder="例如：5000" step="100" min="0">
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button class="btn" style="background: #eee; color: #333;" onclick="closeAlertModal()">取消</button>
+                <button class="btn btn-primary" onclick="saveAlertSettings()">保存设置</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图表区域 -->
+    <div class="charts-section">
+        <h2 style="margin-bottom: 20px; text-align: center;">分类统计</h2>
+        <div class="charts-grid">
+            <div class="chart-container">
+                <h3 style="margin-bottom: 15px; color: #4CAF50;">收入分类</h3>
+                <canvas id="incomeChart" style="width: 100%; height: 250px;"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3 style="margin-bottom: 15px; color: #F44336;">支出分类</h3>
+                <canvas id="expenseChart" style="width: 100%; height: 250px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 引入Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
-    // ========== 核心功能脚本 ==========
-    let records = [];
-    let currentUser = null;
-    let chartInstance = null;
+<!-- 自定义JS文件（按顺序引入）-->
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/pagination.js"></script>
+<script src="js/search.js"></script>
+<script src="js/alert.js"></script>
+<script src="js/main.js"></script>
 
-    // 初始化页面
-    document.addEventListener('DOMContentLoaded', function() {
-        // 设置默认日期
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('recordDate').value = today;
-
-        // 检查登录状态
-        checkLoginStatus();
-
-        // 加载数据
-        loadData();
-    });
-
-    // 检查登录状态
-    function checkLoginStatus() {
-        const userData = localStorage.getItem('currentUser');
-        if (!userData) {
-            window.location.href = 'index.html';
-            return;
-        }
-
-        try {
-            currentUser = JSON.parse(userData);
-            document.getElementById('welcomeMessage').textContent =
-                `欢迎，${currentUser.username}`;
-        } catch (e) {
-            window.location.href = 'index.html';
-        }
-    }
-
-    // 加载数据
-    function loadData() {
-        if (!currentUser) return;//用户不存在就返回
-
-        const storageKey = currentUser.username === 'guest'//根据用户类型确定存储键
-            ? 'guestAccountingData'
-            : `accountingData_${currentUser.username}`;
-
-        const data = localStorage.getItem(storageKey);//从本地存储获取数据
-        records = data ? JSON.parse(data) : [];//解析数据或初始化为空数组
-        currentPage = 1;//每次加载数据时重置为第一页
-
-        updateDisplay();//更新显示图表
-    }
-
-    // 保存数据
-    function saveData() {
-        if (!currentUser) return;
-
-        const storageKey = currentUser.username === 'guest'
-            ? 'guestAccountingData'
-            : `accountingData_${currentUser.username}`;
-
-        localStorage.setItem(storageKey, JSON.stringify(records));
-    }
-
-    // 添加记录
-    function addRecord() {
-        const type = document.getElementById('recordType').value;
-        const amount = parseFloat(document.getElementById('amount').value);
-        const category = document.getElementById('category').value;
-        const date = document.getElementById('recordDate').value;
-        const description = document.getElementById('description').value.trim();
-
-        // 验证
-        if (!amount || amount <= 0) {
-            alert('请输入有效的金额');
-            return;
-        }
-
-        if (!date) {
-            alert('请选择日期');
-            return;
-        }
-
-        // 创建记录
-        const record = {
-            id: Date.now(),
-            type: type,
-            amount: amount,
-            category: category,
-            date: date,
-            description: description,
-            timestamp: new Date().toISOString()
-        };
-
-        records.unshift(record);
-        saveData();
-
-        // 清空表单
-        document.getElementById('amount').value = '';
-        document.getElementById('description').value = '';
-
-        // 更新显示
-        updateDisplay();
-
-        alert('记录添加成功！');
-    }
-
-    // 删除记录
-    function deleteRecord(id) {
-        if (!confirm('确定要删除这条记录吗？')) return;
-
-        records = records.filter(record => record.id !== id);
-        saveData();
-        updateDisplay();
-    }
-
-    // 更新显示
-    function updateDisplay() {
-       updateStatistics();//更新统计数据
-       updateRecordList();//更新记录列表,以及分页
-       updateIncomeChart();//更新收入图表
-       updateExpenseChart();//更新支出图表
-    }
-
-    // 更新统计
-    function updateStatistics() {
-        let totalIncome = 0;
-        let totalExpense = 0;
-
-        records.forEach(record => {
-            if (record.type === 'income') {
-                totalIncome += record.amount;
-            } else {
-                totalExpense += record.amount;
-            }
-        });
-
-        const totalBalance = totalIncome - totalExpense;
-
-        document.getElementById('totalIncome').textContent = `¥ ${totalIncome.toFixed(2)}`;
-        document.getElementById('totalExpense').textContent = `¥ ${totalExpense.toFixed(2)}`;
-        document.getElementById('totalBalance').textContent = `¥ ${totalBalance.toFixed(2)}`;
-    }
-
-    // 更新记录列表
-    function updateRecordList() {
-        const container = document.getElementById('recordsContainer');
-
-        if (records.length === 0) {
-            container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 15px;"></i>
-                        <p>还没有记录，添加第一条记录吧！</p>
-                    </div>
-                `;
-            return;
-        }
-
-        const categoryNames = {
-            'food': '餐饮', 'transport': '交通', 'shopping': '购物',
-            'housing': '住房', 'entertainment': '娱乐', 'salary': '工资',
-            'investment': '投资', 'other': '其他'
-        };
-
-        let html = '';
-        const recent = records.slice(0, 15);
-
-        recent.forEach(record => {
-            const category = categoryNames[record.category] || record.category;
-            const typeClass = record.type === 'income' ? 'income-type' : 'expense-type';
-            const typeSign = record.type === 'income' ? '+' : '-';
-            const amountColor = record.type === 'income' ? '#4CAF50' : '#F44336';
-
-            html += `
-                    <div class="record-item">
-                        <div class="record-type ${typeClass}">
-                            ${record.type === 'income' ? '收' : '支'}
-                        </div>
-                        <div class="record-info">
-                            <div class="record-category">${category}</div>
-                            <div class="record-meta">
-                                ${record.date} ${record.description ? '· ' + record.description : ''}
-                            </div>
-                        </div>
-                        <div class="record-amount" style="color: ${amountColor}">
-                            ${typeSign}¥ ${record.amount.toFixed(2)}
-                        </div>
-                        <button class="delete-btn" onclick="deleteRecord(${record.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
-        });
-
-        container.innerHTML = html;
-    }
-
-    let incomeChartInstance = null;//收入图表实例
-    let expenseChartInstance = null;//支出图表实例
-
-    // 更新收入图表
-    function updateIncomeChart() {
-        const ctx = document.getElementById('incomeChart').getContext('2d'); // 获取收入图表canvas上下文
-
-        // 计算收入分类统计
-        const categoryTotals = {}; // 分类总计对象
-        records.forEach(record => { // 遍历所有记录
-            if (record.type === 'income') { // 只处理收入记录
-                categoryTotals[record.category] = (categoryTotals[record.category] || 0) + record.amount; // 累加分类金额
-            }
-        });
-
-        const categories = Object.keys(categoryTotals); // 获取分类数组
-        const amounts = Object.values(categoryTotals); // 获取金额数组
-
-        // 处理无数据情况
-        if (categories.length === 0) {
-            document.getElementById('incomeChart').parentElement.innerHTML = `
-            <h2 style="margin-bottom: 20px;">收入分类统计</h2>
-            <div class="empty-state" style="padding: 20px;">
-                <p>暂无收入数据</p>
-            </div>
-        `;
-            return;
-        }
-
-        // 销毁旧图表
-        if (incomeChartInstance) incomeChartInstance.destroy(); // 销毁之前的收入图表
-
-        // 创建新图表
-        incomeChartInstance = new Chart(ctx, { // 创建Chart.js实例
-            type: 'pie', // 饼图类型
-            data: { // 图表数据
-                labels: categories.map(cat => ({ // 映射分类名称
-                    'food': '餐饮', 'transport': '交通', 'shopping': '购物',
-                    'housing': '住房', 'entertainment': '娱乐', 'salary': '工资',
-                    'investment': '投资', 'other': '其他'
-                })[cat] || cat),
-                datasets: [{ // 数据集
-                    data: amounts, // 数据值
-                    backgroundColor: [ // 饼图颜色数组
-                        '#4CAF50', '#2196F3', '#FF9800', '#9C27B0',
-                        '#00BCD4', '#FFC107', '#795548', '#607D8B'
-                    ]
-                }]
-            },
-            options: { // 图表选项
-                responsive: true, // 响应式设计
-                plugins: { // 插件配置
-                    legend: { position: 'bottom' } // 图例位置
-                }
-            }
-        });
-    }
-
-    // 更新支出图表
-    function updateExpenseChart() {
-        const ctx = document.getElementById('expenseChart').getContext('2d'); // 获取支出图表canvas上下文
-
-        // 计算支出分类统计
-        const categoryTotals = {}; // 分类总计对象
-        records.forEach(record => { // 遍历所有记录
-            if (record.type === 'expense') { // 只处理支出记录
-                categoryTotals[record.category] = (categoryTotals[record.category] || 0) + record.amount; // 累加分类金额
-            }
-        });
-
-        const categories = Object.keys(categoryTotals); // 获取分类数组
-        const amounts = Object.values(categoryTotals); // 获取金额数组
-
-        // 处理无数据情况
-        if (categories.length === 0) {
-            document.getElementById('expenseChart').parentElement.innerHTML = `
-            <h2 style="margin-bottom: 20px;">支出分类统计</h2>
-            <div class="empty-state" style="padding: 20px;">
-                <p>暂无支出数据</p>
-            </div>
-        `;
-            return;
-        }
-
-        // 销毁旧图表
-        if (expenseChartInstance) expenseChartInstance.destroy(); // 销毁之前的支出图表
-
-        // 创建新图表
-        expenseChartInstance = new Chart(ctx, { // 创建Chart.js实例
-            type: 'pie', // 饼图类型
-            data: { // 图表数据
-                labels: categories.map(cat => ({ // 映射分类名称
-                    'food': '餐饮', 'transport': '交通', 'shopping': '购物',
-                    'housing': '住房', 'entertainment': '娱乐', 'salary': '工资',
-                    'investment': '投资', 'other': '其他'
-                })[cat] || cat),
-                datasets: [{ // 数据集
-                    data: amounts, // 数据值
-                    backgroundColor: [ // 饼图颜色数组
-                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                        '#9966FF', '#FF9F40', '#8AC926', '#FF595E'
-                    ]
-                }]
-            },
-            options: { // 图表选项
-                responsive: true, // 响应式设计
-                plugins: { // 插件配置
-                    legend: { position: 'bottom' } // 图例位置
-                }
-            }
-        });
-    }
-
-    // ========== 分页相关变量 ==========
-    let currentPage = 1; // 当前页码
-    const recordsPerPage = 6; // 每页显示6条记录
-
-    // 更新记录列表
-    function updateRecordList() {
-        const container = document.getElementById('recordsContainer'); // 获取记录容器
-        const pageInfo = document.getElementById('pageInfo'); // 获取页码信息元素
-        const prevBtn = document.getElementById('prevBtn'); // 获取上一页按钮
-        const nextBtn = document.getElementById('nextBtn'); // 获取下一页按钮
-
-        if (records.length === 0) { // 如果没有记录
-            container.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 15px;"></i>
-                <p>还没有记录，添加第一条记录吧！</p>
-            </div>
-        `;
-            pageInfo.textContent = '第 1 页'; // 显示默认页码
-            prevBtn.disabled = true; // 禁用上一页按钮
-            nextBtn.disabled = true; // 禁用下一页按钮
-            return;
-        }
-
-        // 计算总页数
-        const totalPages = Math.ceil(records.length / recordsPerPage); // 计算总页数
-        if (currentPage > totalPages) currentPage = totalPages; // 如果当前页码大于总页数，重置为最后一页
-        if (currentPage < 1) currentPage = 1; // 如果当前页码小于1，重置为第一页
-
-        // 计算当前页的记录范围
-        const startIndex = (currentPage - 1) * recordsPerPage; // 起始索引
-        const endIndex = Math.min(startIndex + recordsPerPage, records.length); // 结束索引
-        const pageRecords = records.slice(startIndex, endIndex); // 获取当前页记录
-
-        // 更新页码信息
-        pageInfo.textContent = `第 ${currentPage} / ${totalPages} 页`; // 显示页码信息
-
-        // 更新按钮状态
-        prevBtn.disabled = currentPage === 1; // 第一页时禁用上一页按钮
-        nextBtn.disabled = currentPage === totalPages; // 最后一页时禁用下一页按钮
-
-        // 生成当前页的HTML
-        const categoryNames = { // 分类名称映射
-            'food': '餐饮', 'transport': '交通', 'shopping': '购物',
-            'housing': '住房', 'entertainment': '娱乐', 'salary': '工资',
-            'investment': '投资', 'other': '其他'
-        };
-
-        let html = ''; // HTML字符串
-        pageRecords.forEach(record => { // 遍历当前页记录
-            const category = categoryNames[record.category] || record.category; // 获取分类名称
-            const typeClass = record.type === 'income' ? 'income-type' : 'expense-type'; // 类型样式类
-            const typeSign = record.type === 'income' ? '+' : '-'; // 类型符号
-            const amountColor = record.type === 'income' ? '#4CAF50' : '#F44336'; // 金额颜色
-
-            html += `
-            <div class="record-item">
-                <div class="record-type ${typeClass}">
-                    ${record.type === 'income' ? '收' : '支'}
-                </div>
-                <div class="record-info">
-                    <div class="record-category">${category}</div>
-                    <div class="record-meta">
-                        ${record.date} ${record.description ? '· ' + record.description : ''}
-                    </div>
-                </div>
-                <div class="record-amount" style="color: ${amountColor}">
-                    ${typeSign}¥ ${record.amount.toFixed(2)}
-                </div>
-                <button class="delete-btn" onclick="deleteRecord(${record.id})">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        `;
-        });
-
-        // 添加页码信息到列表底部
-        html += `
-        <div class="pagination-footer" style="padding: 15px 20px; text-align: center; border-top: 1px solid #eee; color: #666; font-size: 14px;">
-            显示 ${startIndex + 1}-${endIndex} 条，共 ${records.length} 条记录
-        </div>
-    `;
-
-        container.innerHTML = html; // 更新容器内容
-    }
-
-    // 上一页函数
-    function prevPage() {
-        if (currentPage > 1) { // 如果不是第一页
-            currentPage--; // 页码减一
-            updateRecordList(); // 更新记录列表
-        }
-    }
-
-    // 下一页函数
-    function nextPage() {
-        const totalPages = Math.ceil(records.length / recordsPerPage); // 计算总页数
-        if (currentPage < totalPages) { // 如果不是最后一页
-            currentPage++; // 页码加一
-            updateRecordList(); // 更新记录列表
-        }
-    }
-
-    // 在deleteRecord函数中重置页码
-    function deleteRecord(id) {
-        if (!confirm('确定要删除这条记录吗？')) return; // 确认删除
-
-        records = records.filter(record => record.id !== id); // 过滤掉要删除的记录
-
-        // 如果删除后当前页没有记录且不是第一页，则返回上一页
-        const totalPages = Math.ceil(records.length / recordsPerPage); // 重新计算总页数
-        if (currentPage > totalPages && currentPage > 1) { // 如果当前页码大于总页数且不是第一页
-            currentPage = totalPages; // 跳转到最后一页
-        }
-
-        saveData(); // 保存数据
-        updateDisplay(); // 更新显示
-    }
-
-    // 在addRecord函数中重置页码
-    function addRecord() {
-        const type = document.getElementById('recordType').value; // 获取记录类型
-        const amount = parseFloat(document.getElementById('amount').value); // 获取金额
-        const category = document.getElementById('category').value; // 获取分类
-        const date = document.getElementById('recordDate').value; // 获取日期
-        const description = document.getElementById('description').value.trim(); // 获取备注
-
-        if (!amount || amount <= 0) { // 验证金额
-            alert('请输入有效的金额'); // 提示输入有效金额
-            return;
-        }
-
-        if (!date) { // 验证日期
-            alert('请选择日期'); // 提示选择日期
-            return;
-        }
-
-        const record = { // 创建记录对象
-            id: Date.now(), // 使用时间戳作为ID
-            type: type, // 记录类型
-            amount: amount, // 金额
-            category: category, // 分类
-            date: date, // 日期
-            description: description, // 备注
-            timestamp: new Date().toISOString() // 时间戳
-        };
-
-        records.unshift(record); // 添加到记录数组开头
-        currentPage = 1; // 添加新记录后跳转到第一页
-        saveData(); // 保存数据
-
-        document.getElementById('amount').value = ''; // 清空金额输入框
-        document.getElementById('description').value = ''; // 清空备注输入框
-
-        updateDisplay(); // 更新显示
-        alert('记录添加成功！'); // 提示添加成功
-    }
-
-    // ========== 搜索相关变量 ==========
-    let searchKeyword = ''; // 搜索关键词
-    let isSearchMode = false; // 是否处于搜索模式
-    let searchResults = []; // 搜索结果
-
-    // 处理搜索输入（支持回车搜索）
-    function handleSearchInput(event) {
-        if (event.key === 'Enter') { // 如果按下回车键
-            performSearch(); // 执行搜索
-            event.target.blur(); // 移除焦点
-        }
-    }
-
-    // 执行搜索函数
-    function performSearch() {
-        const input = document.getElementById('searchInput').value.trim(); // 获取搜索输入
-        searchKeyword = input; // 保存搜索关键词
-
-        if (!searchKeyword) { // 如果搜索关键词为空
-            clearSearch(); // 清除搜索
-            return;
-        }
-
-        isSearchMode = true; // 进入搜索模式
-        searchRecords(); // 搜索记录
-    }
-
-    // 使用正则表达式搜索记录
-    function searchRecords() {
-        try {
-            // 使用正则表达式实现模糊搜索
-            const regex = new RegExp(searchKeyword, 'i'); // 创建正则表达式，不区分大小写
-
-            // 搜索匹配的记录
-            searchResults = records.filter(record => {
-                // 搜索备注字段
-                const matchDescription = record.description && regex.test(record.description);
-                // 搜索分类字段
-                const matchCategory = regex.test(record.category);
-                // 返回匹配的记录
-                return matchDescription || matchCategory;
-            });
-
-            if (searchResults.length === 0) { // 如果没有搜索结果
-                showNoResults(); // 显示无结果
-                return;
-            }
-
-            // 显示搜索结果
-            displaySearchResults(); // 显示搜索结果
-
-        } catch (error) { // 捕获异常
-            console.error('搜索出错：', error);
-            alert('搜索过程中出现错误');
-        }
-    }
-
-    // 显示无搜索结果
-    function showNoResults() {
-        const container = document.getElementById('recordsContainer'); // 获取记录容器
-        container.innerHTML = `
-        <div class="empty-state">
-            <i class="fas fa-search" style="font-size: 48px; margin-bottom: 15px; color: #ccc;"></i>
-            <p>没有找到包含 "<strong>${searchKeyword}</strong>" 的记录</p>
-            <button onclick="clearSearch()" style="margin-top: 10px; padding: 8px 16px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                返回全部记录
-            </button>
-        </div>
-    `;
-    }
-
-    // 显示搜索结果
-    function displaySearchResults() {
-        const container = document.getElementById('recordsContainer'); // 获取记录容器
-
-        const categoryNames = { // 分类名称映射
-            'food': '餐饮', 'transport': '交通', 'shopping': '购物',
-            'housing': '住房', 'entertainment': '娱乐', 'salary': '工资',
-            'investment': '投资', 'other': '其他'
-        };
-
-        let html = ''; // HTML字符串
-
-        // 显示搜索结果标题
-        html += `
-        <div style="padding: 15px 20px; background: #e8f5e9; border-bottom: 1px solid #4CAF50;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <i class="fas fa-search" style="color: #4CAF50; margin-right: 8px;"></i>
-                    <span style="color: #2E7D32; font-weight: 500;">搜索到 ${searchResults.length} 条记录</span>
-                    <span style="color: #666; margin-left: 10px; font-size: 13px;">关键词: ${searchKeyword}</span>
-                </div>
-                <button onclick="clearSearch()" style="padding: 4px 12px; background: white; color: #4CAF50; border: 1px solid #4CAF50; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                    清除搜索
-                </button>
-            </div>
-        </div>
-    `;
-
-        // 显示搜索结果
-        searchResults.forEach(record => {
-            const category = categoryNames[record.category] || record.category;
-            const typeClass = record.type === 'income' ? 'income-type' : 'expense-type';
-            const typeSign = record.type === 'income' ? '+' : '-';
-            const amountColor = record.type === 'income' ? '#4CAF50' : '#F44336';
-
-            // 高亮显示匹配的文本
-            let highlightedDescription = record.description || '';
-            let highlightedCategory = category;
-
-            try {
-                const regex = new RegExp(searchKeyword, 'gi'); // 全局不区分大小写
-                if (record.description) {
-                    highlightedDescription = record.description.replace(regex, match =>
-                        `<span style="background-color: #fff9c4; padding: 1px 3px; border-radius: 2px; font-weight: bold;">${match}</span>`
-                    );
-                }
-                highlightedCategory = category.replace(regex, match =>
-                    `<span style="background-color: #fff9c4; padding: 1px 3px; border-radius: 2px; font-weight: bold;">${match}</span>`
-                );
-            } catch (e) {
-                // 保持原样
-            }
-
-            html += `
-            <div class="record-item">
-                <div class="record-type ${typeClass}">
-                    ${record.type === 'income' ? '收' : '支'}
-                </div>
-                <div class="record-info">
-                    <div class="record-category">${highlightedCategory}</div>
-                    <div class="record-meta">
-                        ${record.date} ${record.description ? '· ' + highlightedDescription : ''}
-                    </div>
-                </div>
-                <div class="record-amount" style="color: ${amountColor}">
-                    ${typeSign}¥ ${record.amount.toFixed(2)}
-                </div>
-                <button class="delete-btn" onclick="deleteRecord(${record.id})">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        `;
-        });
-
-        // 添加返回全部记录按钮
-        html += `
-        <div style="padding: 15px 20px; text-align: center; border-top: 1px solid #eee;">
-            <button onclick="clearSearch()" style="padding: 8px 20px; background: #f5f5f5; color: #666; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">
-                <i class="fas fa-arrow-left" style="margin-right: 5px;"></i>返回全部记录
-            </button>
-        </div>
-    `;
-
-        container.innerHTML = html; // 更新容器内容
-    }
-
-    // 清除搜索函数
-    function clearSearch() {
-        searchKeyword = ''; // 清空搜索关键词
-        isSearchMode = false; // 退出搜索模式
-        searchResults = []; // 清空搜索结果
-
-        document.getElementById('searchInput').value = ''; // 清空搜索输入框
-
-        // 恢复显示正常记录
-        updateDisplay(); // 调用原有的更新显示函数
-    }
-
-    // 修改deleteRecord函数，支持在搜索模式下删除
-    function deleteRecord(id) {
-        if (!confirm('确定要删除这条记录吗？')) return;
-
-        // 删除记录
-        records = records.filter(record => record.id !== id);
-
-        // 如果在搜索模式下，更新搜索结果
-        if (isSearchMode && searchKeyword) {
-            searchResults = searchResults.filter(record => record.id !== id);
-
-            if (searchResults.length === 0) {
-                showNoResults(); // 显示无结果
-            } else {
-                displaySearchResults(); // 重新显示搜索结果
-            }
-        }
-
-        // 调整分页
-        const totalPages = Math.ceil(records.length / recordsPerPage);
-        if (currentPage > totalPages && currentPage > 1) {
-            currentPage = totalPages;
-        }
-
-        saveData();
-        if (!isSearchMode) {
-            updateDisplay(); // 只在非搜索模式下更新显示
-        }
-    }
-
-    // 退出登录
-    function logout() {
-        if (confirm('确定要退出登录吗？')) {
-            localStorage.removeItem('currentUser');
-            window.location.href = 'index.html';
-        }
-    }
-</script>
 </body>
 </html>

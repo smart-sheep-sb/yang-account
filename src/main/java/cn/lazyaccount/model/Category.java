@@ -1,3 +1,4 @@
+//账单分类的实体模型，对应数据库中的t_bill_category表
 package cn.lazyaccount.model;
 
 public class Category {

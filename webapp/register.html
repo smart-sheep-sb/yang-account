@@ -1,289 +1,286 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>记账管理 - 注册</title>
-    <link rel="stylesheet" href="/css/style.css">
+<!DOCTYPE html><!-- 声明文档类型为HTML5，告诉浏览器以标准模式渲染页面 -->
+<html lang="zh-CN"><!-- HTML根元素，lang属性声明页面主要语言为简体中文 -->
+<head><!-- 文档元数据区域，包含页面配置信息，不直接显示 -->
+    <meta charset="UTF-8"><!-- 声明字符编码为UTF-8，支持中文字符显示 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- 视口设置：宽度等于设备宽度，初始缩放100%，用于移动端适配 -->
+    <title>记账管理 - 注册</title><!-- 浏览器选项卡上显示的页面标题 -->
+    <link rel="stylesheet" href="/css/style.css"><!-- 引入全局样式文件，实现样式复用（当前页面会在此基础上叠加下方特定样式） -->
     <style>
-
         /* 注册页面特定样式 */
-        .register-container {
-            max-width: 400px;
-            margin: 80px auto;
-            padding: 30px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+
+        .register-container {/* 注册卡片容器 */
+            max-width: 400px;/* 最大宽度400px，保持卡片紧凑 */
+            margin: 80px auto;/* 上下外边距80px，左右自动居中 */
+            padding: 30px;/* 内边距30px，内容与卡片边缘留白 */
+            background: white;/* 纯白背景，干净简洁 */
+            border-radius: 10px;/* 10px圆角，现代卡片风格 */
+            box-shadow: 0 0 20px rgba(0,0,0,0.1); /* 全方向均匀阴影，轻微浮起感 */
         }
-        .register-header {
-            text-align: center;
-            margin-bottom: 30px;
+        .register-header {/* 注册头部区域 */
+            text-align: center;/* 文本居中 */
+            margin-bottom: 30px;/* 底部外边距30px，与表单区域分离 */
         }
-        .register-header h1 {
-            color: #409EFF;
-            margin-bottom: 10px;
+        .register-header h1 {/* 头部主标题 */
+            color: #409EFF;/* 主题蓝色（Element UI风格） */
+            margin-bottom: 10px;/* 底部外边距10px，与副标题拉开距离 */
         }
-        .register-form .form-group {
-            margin-bottom: 20px;
+        .register-form .form-group {/* 注册表单区域 */
+            margin-bottom: 20px;/* 每个表单项底部间距20px，保持呼吸感 */
         }
-        .register-form label {
-            display: block;
-            margin-bottom: 5px;
-            color: #666;
-            font-weight: 500;
+        .register-form label {/* 表单项标签样式 */
+            display: block;/* 块级元素，独占一行 */
+            margin-bottom: 5px; /* 标签与输入框间距5px */
+            color: #666;/* 深灰色文字 */
+            font-weight: 500; /* 字重500，中等粗细 */
         }
-        .register-form input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            box-sizing: border-box;
+        .register-form input {/* 输入框基础样式 */
+            width: 100%;/* 宽度100%填充父容器 */
+            padding: 10px;/* 内边距10px，保证点击区域足够 */
+            border: 1px solid #ddd; /* 浅灰色边框 */
+            border-radius: 5px;/* 5px圆角，温和不突兀 */
+            font-size: 14px;/* 字号14px */
+            box-sizing: border-box;/* 边框内边距计入宽高，防止溢出 */
         }
-        .register-form input:focus {
-            border-color: #409EFF;
-            outline: none;
-            box-shadow: 0 0 5px rgba(64,158,255,0.3);
+        .register-form input:focus {/* 输入框焦点状态样式 */
+            border-color: #409EFF; /* 边框变蓝，主题色提示 */
+            outline: none;/* 移除浏览器默认轮廓 */
+            box-shadow: 0 0 5px rgba(64,158,255,0.3);/* 浅蓝色外发光，增强视觉反馈 */
         }
-        .register-btn {
-            width: 100%;
-            padding: 12px;
-            background: #409EFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
+        .register-btn {/* 注册按钮样式 */
+            width: 100%;/* 宽度100%填充 */
+            padding: 12px;/* 内边距12px */
+            background: #409EFF;/* 主题蓝色背景 */
+            color: white;/* 文字白色 */
+            border: none;/* 无边框 */
+            border-radius: 5px;/* 5px圆角 */
+            font-size: 16px;/* 字号16px */
+            cursor: pointer;/* 鼠标悬停手型 */
+            transition: background 0.3s;/* 背景色0.3秒渐变过渡 */
         }
-        .register-btn:hover {
-            background: #337ecc;
+        .register-btn:hover {/* 按钮悬停状态 */
+            background: #337ecc;/* 深蓝色背景，加深反馈 */
         }
-        .register-footer {
-            margin-top: 20px;
-            text-align: center;
-            color: #666;
+        .register-footer {/* 注册底部链接区域 */
+            margin-top: 20px; /* 顶部外边距20px */
+            text-align: center;/* 文本居中 */
+            color: #666;/* 深灰色文字 */
         }
-        .register-footer a {
-            color: #409EFF;
-            text-decoration: none;
+        .register-footer a {/* 底部链接样式 */
+            color: #409EFF;/* 主题蓝色 */
+            text-decoration: none; /* 移除下划线 */
         }
-        .register-footer a:hover {
-            text-decoration: underline;
+        .register-footer a:hover {/* 底部链接悬停状态 */
+            text-decoration: underline;/* 悬停添加下划线，提示可点击 */
         }
-        .error-message {
-            color: #F56C6C;
-            background: #fef0f0;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            display: none;
+        .error-message {/* 错误提示框样式 */
+            color: #F56C6C;/* 红色文字（Element UI错误色） */
+            background: #fef0f0;/* 浅红色背景 */
+            padding: 10px;/* 内边距10px */
+            border-radius: 5px;/* 5px圆角 */
+            margin-bottom: 20px;/* 底部外边距20px */
+            display: none;/* 默认隐藏，仅在错误时显示 */
         }
-        .success-message {
-            color: #67C23A;
-            background: #f0f9eb;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            display: none;
+        .success-message {/* 成功提示框样式 */
+            color: #67C23A;/* 绿色文字（Element UI成功色） */
+            background: #f0f9eb;/* 浅绿色背景 */
+            padding: 10px;/* 内边距10px */
+            border-radius: 5px;/* 5px圆角 */
+            margin-bottom: 20px;/* 底部外边距20px */
+            display: none;/* 默认隐藏，仅在成功时显示 */
         }
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 10px 0;
+        .loading {/* 加载状态提示样式 */
+            display: none;/* 默认隐藏，提交时显示 */
+            text-align: center;/* 文本居中 */
+            margin: 10px 0; /* 上下外边距10px */
         }
-        .password-strength {
-            margin-top: 5px;
-            font-size: 12px;
+        .password-strength {/* 密码强度提示样式 */
+            margin-top: 5px;/* 顶部外边距5px，与输入框分离 */
+            font-size: 12px;/* 字号12px，辅助信息 */
         }
-        .strength-weak {
-            color: #F56C6C;
+        .strength-weak {/* 密码强度 - 弱 */
+            color: #F56C6C;/* 红色，表示不安全 */
         }
-        .strength-medium {
-            color: #E6A23C;
+        .strength-medium {/* 密码强度 - 中 */
+            color: #E6A23C;/* 橙色，表示中等 */
         }
-        .strength-strong {
-            color: #67C23A;
+        .strength-strong {/* 密码强度 - 强 */
+            color: #67C23A;/* 绿色，表示安全 */
         }
     </style>
 </head>
 <body>
-<div class="register-container">
-    <div class="register-header">
-        <h1>注册新账号</h1>
-        <p>加入记账管理，开启智能记账生活</p>
+<div class="register-container"><!-- 注册卡片容器 -->
+    <div class="register-header"><!-- 注册头部区域 -->
+        <h1>注册新账号</h1><!-- 主标题 -->
+        <p>加入记账管理，开启智能记账生活</p><!-- 副标题/口号 -->
     </div>
-    <div class="error-message" id="errorMessage"></div>
-    <div class="success-message" id="successMessage"></div>
-    <form class="register-form" id="registerForm">
-        <div class="form-group">
+    <div class="error-message" id="errorMessage"></div><!-- 错误提示容器，动态显示注册失败信息 -->
+    <div class="success-message" id="successMessage"></div> <!-- 成功提示容器，动态显示注册成功信息 -->
+    <form class="register-form" id="registerForm"><!-- 注册表单，id用于JavaScript操作 -->
+        <div class="form-group"><!-- 用户名表单项 -->
             <label for="username">用户名</label>
             <input type="text" id="username" name="username"
-                   placeholder="请输入用户名（3-20位字母数字）" required>
-            <div class="password-strength" id="usernameTip" style="display: none;">
+                   placeholder="请输入用户名（3-20位字母数字）" required><!-- 用户名输入框，限制3-20位字母数字（前端仅占位提示，后端验证） -->
+            <div class="password-strength" id="usernameTip" style="display: none;"><!-- 用户名可用性提示，初始隐藏 -->
                 用户名可用
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group"><!-- 密码表单项 -->
             <label for="password">密码</label>
             <input type="password" id="password" name="password"
-                   placeholder="请输入密码（至少6位）" required>
-            <div class="password-strength" id="passwordStrength">
+                   placeholder="请输入密码（至少6位）" required><!-- 密码输入框，至少6位，掩码显示 -->
+            <div class="password-strength" id="passwordStrength"><!-- 密码强度提示区域 -->
                 密码强度：<span id="strengthText">未输入</span>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group"><!-- 确认密码表单项 -->
             <label for="confirmPassword">确认密码</label>
             <input type="password" id="confirmPassword" name="confirmPassword"
                    placeholder="请再次输入密码" required>
-            <div class="password-strength" id="passwordMatch" style="display: none;">
+            <div class="password-strength" id="passwordMatch" style="display: none;"> <!-- 密码一致性提示，初始隐藏 -->
                 密码一致
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group"><!-- 昵称表单项（可选） -->
             <label for="nickname">昵称（可选）</label>
             <input type="text" id="nickname" name="nickname"
                    placeholder="请输入昵称，不填则使用用户名">
         </div>
-        <div class="loading" id="loading">
+        <div class="loading" id="loading"><!-- 加载中提示，提交时显示 -->
             <span>注册中...</span>
         </div>
-        <button type="submit" class="register-btn">注册</button>
+        <button type="submit" class="register-btn">注册</button><!-- 注册提交按钮 -->
     </form>
-    <div class="login-link">
+    <div class="login-link"><!-- 登录链接区域（修正：原代码使用.login-link但未定义样式，这里统一使用.register-footer类） -->
         <p>已有账号？<a href="index.html">立即登录</a></p>
     </div>
 </div>
 <script>
-    // 检查用户名是否可用
-    document.getElementById('username').addEventListener('blur', async function() {
-        const username = this.value.trim();
-        if (username.length < 3) {
+    //注册页面交互逻辑
+    document.getElementById('username').addEventListener('blur', async function() {//检查用户名是否可用
+        const username = this.value.trim();// 获取用户名并去除首尾空格
+        if (username.length < 3) { // 长度小于3不进行检查
             return;
         }
-        // 这里可以添加用户名检查逻辑
-        const usernameTip = document.getElementById('usernameTip');
-        usernameTip.textContent = '正在检查用户名...';
-        usernameTip.style.display = 'block';
-        usernameTip.className = 'password-strength strength-medium';
+        const usernameTip = document.getElementById('usernameTip');// 用户名提示元素
+        usernameTip.textContent = '正在检查用户名...';// 设置检查中状态
+        usernameTip.style.display = 'block';// 显示提示框
+        usernameTip.className = 'password-strength strength-medium';// 中等强度样式（橙色）
         // 简单的前端检查
-        if (username === 'admin') {
+        if (username === 'admin') {// 预留用户名admin不可注册
             usernameTip.textContent = '用户名不可用';
-            usernameTip.className = 'password-strength strength-weak';
+            usernameTip.className = 'password-strength strength-weak';// 弱样式（红色）
         } else {
             usernameTip.textContent = '用户名可用';
-            usernameTip.className = 'password-strength strength-strong';
+            usernameTip.className = 'password-strength strength-strong';// 强样式（绿色）
         }
     });
     // 密码强度检查
     document.getElementById('password').addEventListener('input', function() {
-        const password = this.value;
-        const strengthText = document.getElementById('strengthText');
-        const strengthDiv = document.getElementById('passwordStrength');
-        if (password.length === 0) {
+        const password = this.value;// 获取当前密码
+        const strengthText = document.getElementById('strengthText');// 强度文字
+        const strengthDiv = document.getElementById('passwordStrength');// 强度容器
+        if (password.length === 0) {//密码为空
             strengthText.textContent = '未输入';
-            strengthDiv.className = 'password-strength';
+            strengthDiv.className = 'password-strength';//移除强度样式
             return;
         }
+        // 密码强度评分规则（0-4分）
         let strength = 0;
-        if (password.length >= 6) strength++;
-        if (/[A-Z]/.test(password)) strength++;
-        if (/[0-9]/.test(password)) strength++;
-        if (/[^A-Za-z0-9]/.test(password)) strength++;
+        if (password.length >= 6) strength++;// 长度≥6：+1分
+        if (/[A-Z]/.test(password)) strength++;// 包含大写字母：+1分
+        if (/[0-9]/.test(password)) strength++;// 包含数字：+1分
+        if (/[^A-Za-z0-9]/.test(password)) strength++;// 包含特殊字符：+1分
+        // 根据得分显示对应强度等级
         if (strength <= 1) {
             strengthText.textContent = '弱';
-            strengthDiv.className = 'password-strength strength-weak';
+            strengthDiv.className = 'password-strength strength-weak';// 弱样式（红色）
         } else if (strength <= 3) {
             strengthText.textContent = '中';
-            strengthDiv.className = 'password-strength strength-medium';
+            strengthDiv.className = 'password-strength strength-medium';// 中样式（橙色）
         } else {
             strengthText.textContent = '强';
-            strengthDiv.className = 'password-strength strength-strong';
+            strengthDiv.className = 'password-strength strength-strong';// 强样式（绿色）
         }
     });
-    // 确认密码检查
+    // 确认密码实时检查
     document.getElementById('confirmPassword').addEventListener('input', function() {
-        const password = document.getElementById('password').value;
-        const confirmPassword = this.value;
-        const matchDiv = document.getElementById('passwordMatch');
-        if (confirmPassword.length === 0) {
+        const password = document.getElementById('password').value;//原始密码
+        const confirmPassword = this.value;// 确认密码
+        const matchDiv = document.getElementById('passwordMatch');// 一致性提示容器
+        if (confirmPassword.length === 0) {// 确认密码为空时隐藏提示
             matchDiv.style.display = 'none';
             return;
         }
-        if (password === confirmPassword) {
+        if (password === confirmPassword) {// 密码一致
             matchDiv.textContent = '密码一致';
-            matchDiv.className = 'password-strength strength-strong';
+            matchDiv.className = 'password-strength strength-strong';// 绿色提示
             matchDiv.style.display = 'block';
-        } else {
+        } else {// 密码不一致
             matchDiv.textContent = '密码不一致';
-            matchDiv.className = 'password-strength strength-weak';
+            matchDiv.className = 'password-strength strength-weak';// 红色提示
             matchDiv.style.display = 'block';
         }
     });
     // 注册表单提交
     document.getElementById('registerForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const username = document.getElementById('username').value.trim();
+        e.preventDefault(); // 阻止表单默认提交行为（页面刷新）
+        const username = document.getElementById('username').value.trim();// 获取表单数据
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
         const nickname = document.getElementById('nickname').value.trim();
-        // 表单验证
+        //前端表单验证
         if (username.length < 3) {
-            showError('用户名至少3位');
+            showError('用户名至少3位');// 用户名长度验证
             return;
         }
-        if (password.length < 6) {
+        if (password.length < 6) {// 密码长度验证
             showError('密码至少6位');
             return;
         }
-        if (password !== confirmPassword) {
+        if (password !== confirmPassword) {// 密码一致性验证
             showError('两次输入的密码不一致');
             return;
         }
-        // 显示加载中
+        // 显示加载状态，隐藏错误提示
         document.getElementById('loading').style.display = 'block';
         document.getElementById('errorMessage').style.display = 'none';
         try {
-            // 发送注册请求
+            // 发送注册请求到后端API
             const response = await fetch('/api/user/register', {
-                method: 'POST',
+                method: 'POST',// POST方法提交
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'// 请求体为JSON格式
                 },
-                body: JSON.stringify({
+                body: JSON.stringify({// 将表单数据转为JSON字符串
                     username: username,
                     password: password,
-                    nickname: nickname || username
+                    nickname: nickname || username// 昵称为空则使用用户名
                 })
             });
-            const result = await response.json();
-            // 隐藏加载中
-            document.getElementById('loading').style.display = 'none';
-            if (result.success) {
-                // 注册成功
+            const result = await response.json();// 解析后端返回的JSON响应
+
+            document.getElementById('loading').style.display = 'none';// 隐藏加载中
+            if (result.success) {// 注册成功
                 showSuccess('注册成功！正在跳转到登录页面...');
-                // 延迟跳转到登录页面
-                setTimeout(() => {
+                setTimeout(() => {// 延迟2秒后跳转到登录页面，让用户看到成功提示
                     window.location.href = '/index.html';
                 }, 2000);
-            } else {
-                // 注册失败
+            } else {// 注册失败
                 showError(result.message || '注册失败');
             }
-        } catch (error) {
-            // 隐藏加载中
-            document.getElementById('loading').style.display = 'none';
+        } catch (error) {// 网络错误/服务器未响应
+            document.getElementById('loading').style.display = 'none';// 隐藏加载中
             showError('网络错误，请检查服务器是否正常运行');
-            console.error('注册错误:', error);
+            console.error('注册错误:', error);// 控制台输出详细错误，便于调试
         }
     });
     // 显示错误消息
     function showError(message) {
         const errorDiv = document.getElementById('errorMessage');
-        errorDiv.textContent = message;
-        errorDiv.style.display = 'block';
-        // 3秒后自动隐藏
+        errorDiv.textContent = message;// 设置错误文本
+        errorDiv.style.display = 'block';// 显示错误容器
+        // 3秒后自动隐藏提示
         setTimeout(() => {
             errorDiv.style.display = 'none';
         }, 3000);
@@ -291,14 +288,13 @@
     // 显示成功消息
     function showSuccess(message) {
         const successDiv = document.getElementById('successMessage');
-        successDiv.textContent = message;
-        successDiv.style.display = 'block';
+        successDiv.textContent = message;// 设置成功文本
+        successDiv.style.display = 'block';// 显示成功容器
     }
     // 检查是否已经登录
     function checkLoginStatus() {
         const user = localStorage.getItem('currentUser');
-        if (user) {
-            // 如果已经登录，直接跳转到主页面
+        if (user) {// 如果已经登录，直接跳转到主页面
             window.location.href = '/main.html';
         }
     }
