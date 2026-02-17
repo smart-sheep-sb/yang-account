@@ -24,8 +24,6 @@
 界面展示 📸
 登录 / 注册页面
 输入用户名和密码即可登录，新用户可点击 “立即注册” 创建账号。
-<img width="496" height="863" alt="image" src="https://github.com/user-attachments/assets/a5b0f95a-73f9-46e1-b1b2-1e6010595d3c" />
-<img width="506" height="772" alt="image" src="https://github.com/user-attachments/assets/0cf60776-f371-43d9-8176-f9baf8c4f534" />
 首页概览
 展示总收入、总支出、当前余额，并提供月度支出超限预警。
 最近记录
