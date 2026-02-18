@@ -31,57 +31,14 @@
 分类统计
 通过饼图直观展示收入和支出的分类占比，帮助你了解资金流向。
 
-项目结构 📁
-yang-account1.0/
-├── .idea/                      # IDEA 配置文件
-├── src/
-│   └── main/
-│       └── java/
-│           └── cn.lazyaccount/
-│               ├── config/
-│               │   └── DatabaseConfig.java      # 数据库配置
-│               ├── controller/
-│               │   ├── BillController.java      # 账单控制器
-│               │   └── UserController.java      # 用户控制器
-│               ├── dao/
-│               │   ├── BaseDao.java             # 数据访问基类
-│               │   ├── BillDao.java             # 账单数据访问
-│               │   ├── CategoryDao.java         # 分类数据访问
-│               │   └── UserDao.java             # 用户数据访问
-│               ├── model/
-│               │   ├── Bill.java                # 账单实体
-│               │   ├── Category.java            # 分类实体
-│               │   └── User.java                # 用户实体
-│               ├── server/
-│               │   └── SimpleHttpServer.java    # 简易HTTP服务器
-│               ├── service/
-│               │   ├── BillService.java         # 账单业务逻辑
-│               │   └── UserService.java         # 用户业务逻辑
-│               └── util/
-│                   ├── JsonUtil.java            # JSON工具类
-│                   └── WebUtil.java             # Web工具类
-│       └── resources/
-│           └── init_database.sql                # 数据库初始化脚本
-├── test/                             # 测试目录
-├── target/                           # 编译输出目录
-├── webapp/
-│   ├── css/                          # 样式文件
-│   ├── images/                       # 图片资源
-│   ├── js/
-│   │   ├── alert.js                  # 弹窗提示
-│   │   ├── api.js                    # API请求封装
-│   │   ├── auth.js                   # 认证相关
-│   │   ├── charts.js                 # 图表绘制
-│   │   ├── config.js                 # 前端配置
-│   │   ├── main.js                   # 主页面逻辑
-│   │   ├── pagination.js             # 分页功能
-│   │   └── search.js                 # 搜索功能
-│   ├── index.html                    # 首页
-│   ├── main.html                     # 记账主页面
-│   └── register.html                 # 注册页面
-├── account_book.db                   # SQLite数据库文件
-├── .gitignore                        # Git忽略文件
-└── pom.xml                           # Maven项目配置
+登陆界面截图展示
+<img width="495" height="867" alt="image" src="https://github.com/user-attachments/assets/9611caaa-bd2e-4231-b290-ccb550756db6" />
+注册界面截图展示
+<img width="503" height="783" alt="image" src="https://github.com/user-attachments/assets/7531d8a5-c452-4a9e-b0a3-bb8a96eb9106" />
+主界面截图展示
+<img width="1272" height="921" alt="image" src="https://github.com/user-attachments/assets/14453e35-1845-4ae3-8853-5fab13bc4dbc" />
+<img width="1198" height="918" alt="image" src="https://github.com/user-attachments/assets/974cfc43-8eb8-450d-bac2-0c075e31c04d" />
+<img width="1203" height="917" alt="image" src="https://github.com/user-attachments/assets/97dc828c-d68a-4e73-afcd-e3ea9f98eacd" />
 
 贡献🤝
 欢迎提交 Issue 和 Pull Request 来完善这个项目！
